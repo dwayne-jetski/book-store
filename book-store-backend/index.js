@@ -1,5 +1,5 @@
 const connectDB = require('./startup/db');
-const express = requrie('express');
+const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
