@@ -1,7 +1,5 @@
-const { date } = require('joi');
-const { default: validator } = require('validator');
 const Validator = require('validator');
-const isEmpty = ('is-empty');
+const isEmpty = require('is-empty');
 
 module.exports = function validateRegisterInput(data) {
     let errors = {};
@@ -15,7 +13,7 @@ module.exports = function validateRegisterInput(data) {
 
     //name checks
     if(Validator.isEmpty(data.firstName)) {
-        errors.Firstname = "First Name field is required...";
+        errors.firstName = "First Name field is required...";
     }
 
     if(Validator.isEmpty(data.lastName)) {

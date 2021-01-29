@@ -2,6 +2,9 @@ const connectDB = require('./startup/db');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+
+const users = require('./routes/api/users');
 
 const app = express();
 
@@ -15,6 +18,15 @@ app.use(
 
 //Connect to database via ./startup/db
 connectDB();
+
+// Passport middleware
+app.use(passport.initialize());
+
+//passport config
+require('./config/passport')(passport);
+
+//routes
+app.use('/api/users', users);
 
 const port = process.env.PORT || 5000; 
 
