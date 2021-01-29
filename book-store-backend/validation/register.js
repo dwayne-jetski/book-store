@@ -9,9 +9,9 @@ module.exports = function validateRegisterInput(data) {
     //convert empty fields to an empty string so we can use validator functions
     data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
     data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
-    data.email = !isEmpty(data.email) ? data.email: "";
-    data.password = !isEmpty(data.password) ? data.password: "";
-    data.password2 = !isEmpty(data.password2) ? data.password: "";
+    data.email = !isEmpty(data.email) ? data.email : "";
+    data.password = !isEmpty(data.password) ? data.password : "";
+    data.password2 = !isEmpty(data.password2) ? data.password : "";
 
     //name checks
     if(Validator.isEmpty(data.firstName)) {
