@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NavDropdown, Button, FormControl, Form, Nav, Navbar, Col, Row} from 'react-bootstrap';
 import './Landing.css'
 import UseForm from '../UseForm/UseForm';
+import Register from '../Auth/Register'
+import Login from '../Auth/Login'
 
 function Landing () {
 
@@ -11,30 +13,6 @@ function Landing () {
         useAuthType(login);
         console.log(authType);
     }
-
-    function Login(){
-        return(
-            <Form>
-                <Form.Control type="email" placeholder="Email..." ></Form.Control>
-                <FormControl type="password" placeholder="Password..." classNave = "mr-sm-2" />
-                <Button type="submit" variant="info">Login</Button>
-            </Form>
-        )
-    }
-
-    function Register(){
-        return(
-            <Form>
-                <Form.Control type="text" name="firstName" placeholder="First Name..." required="true" />
-                <Form.Control type="text" name="lastName" placeholder="Last Name..." required="true" />
-                <Form.Control type="email" name="email" placeholder="Email..." required="true" />
-                <FormControl type="password" name="password" placeholder="Password..." classNave = "mr-sm-2" />
-                <Form.Control type="text" name="password2" placeholder="confirm password" required="true" />
-                <Button type="submit" variant="info">Login</Button>
-            </Form>
-        )
-    }
-
 
     function LoadRegister(register){
         useAuthType(register);
@@ -69,7 +47,7 @@ function Landing () {
                     <Col>
                         {authType === 'login' ? Login() : Register() }
                     </Col>
-                    
+
                     <Col/>
                 </Row>
 
