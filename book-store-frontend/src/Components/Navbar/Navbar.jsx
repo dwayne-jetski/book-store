@@ -29,7 +29,7 @@ function MyNavBar() {
       </Col>
 
       <Col>
-        {DisplayLogin()}
+        {DisplayLogin('navBar')}
       </Col>
     
     </Navbar>
