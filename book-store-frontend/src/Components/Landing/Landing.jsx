@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { NavDropdown, Button, FormControl, Form, Nav, Navbar, Col, Row} from 'react-bootstrap';
 import './Landing.css'
 import UseForm from '../UseForm/UseForm';
-import Register from '../Auth/Register'
-import Login from '../Auth/Login'
+import DisplayRegistration from '../Auth/Register'
+import DisplayLogin from '../Auth/Login'
 
 function Landing () {
 
@@ -45,7 +45,7 @@ function Landing () {
                     <Col/>
 
                     <Col>
-                        {authType === 'login' ? Login() : Register() }
+                        {authType === 'login' ? DisplayLogin() : DisplayRegistration() }
                     </Col>
 
                     <Col/>

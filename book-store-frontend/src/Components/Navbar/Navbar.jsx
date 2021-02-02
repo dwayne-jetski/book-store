@@ -31,11 +31,11 @@ function MyNavBar() {
         <Form inline>
           
           <Col>
-            <FormControl type="email" placeholder="Search" className="mr-sm-2" />
+            <FormControl type="email" placeholder="Email..." className="mr-sm-2" />
           </Col>
           
           <Col>
-            <FormControl type="password" placeholder="Password" classNave = "mr-sm-2" />
+            <FormControl type="password" placeholder="Password..." classNave = "mr-sm-2" />
           </Col>
           
           <Col>
