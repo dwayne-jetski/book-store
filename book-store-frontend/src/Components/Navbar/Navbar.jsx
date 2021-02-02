@@ -1,6 +1,7 @@
 import UseForm from '../UseForm/UseForm';
 import { NavDropdown, Button, FormControl, Form, Nav, Navbar, Col, Row} from 'react-bootstrap'
 import DisplayLogin from '../Auth/Login'
+import SearchBar from '../SearchBar/SearchBar'
 
 function MyNavBar() {
 
@@ -16,16 +17,7 @@ function MyNavBar() {
       <Col/>
 
       <Col>
-      
-        <Form inline>
-          <Col>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          </Col>
-          <Col>
-            <Button type="Submit" variant="outline-info">Search</Button>
-          </Col>
-        </Form>
-
+        {SearchBar()}
       </Col>
 
       <Col>

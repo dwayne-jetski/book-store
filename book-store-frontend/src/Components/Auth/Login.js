@@ -33,7 +33,7 @@ function DisplayLogin(component){
                     <FormControl type="email" placeholder="Email..." name="email" onChange={handleChange} value={values.email} className="mr-sm-2" />
                 </Col>
                 <Col>
-                    <FormControl type="password" placeholder="Password..." name="password" onChange={handleChange} value={values.password} classNave = "mr-sm-2" />                
+                    <FormControl type="password" placeholder="Password..." name="password" onChange={handleChange} value={values.password} className = "mr-sm-2" />                
                 </Col>
                 <Col>
                     <Button type="submit" variant="outline-info">Login</Button>
