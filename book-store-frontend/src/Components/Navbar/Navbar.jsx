@@ -1,5 +1,6 @@
 import UseForm from '../UseForm/UseForm';
 import { NavDropdown, Button, FormControl, Form, Nav, Navbar, Col, Row} from 'react-bootstrap'
+import DisplayLogin from '../Auth/Login'
 
 function MyNavBar() {
 
@@ -28,21 +29,7 @@ function MyNavBar() {
       </Col>
 
       <Col>
-        <Form inline>
-          
-          <Col>
-            <FormControl type="email" placeholder="Email..." className="mr-sm-2" />
-          </Col>
-          
-          <Col>
-            <FormControl type="password" placeholder="Password..." classNave = "mr-sm-2" />
-          </Col>
-          
-          <Col>
-            <Button type="submit" variant="outline-info">Login</Button>
-          </Col>
-      
-        </Form>
+        {DisplayLogin()}
       </Col>
     
     </Navbar>

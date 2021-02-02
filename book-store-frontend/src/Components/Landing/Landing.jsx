@@ -44,9 +44,7 @@ function Landing () {
                 <Row>
                     <Col/>
 
-                    <Col>
-                        {authType === 'login' ? DisplayLogin() : DisplayRegistration() }
-                    </Col>
+                        { authType === 'login' ? DisplayLogin() : DisplayRegistration() }
 
                     <Col/>
                 </Row>
