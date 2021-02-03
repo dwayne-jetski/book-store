@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 //create Schema
 const UserSchema = new Schema ({
+    type: {
+        type: String,
+        default: "customer"
+    },
     firstName: {
         type: String,
         required: true

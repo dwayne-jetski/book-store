@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MyNavBar from './Components/Navbar/Navbar';
 import Landing from './Components/Landing/Landing';
 import Books from './Components/Books/Books';
@@ -20,7 +21,6 @@ function App() {
     console.log(newState);
   
   }
-
 
   if (currentlyViewing === 'Landing'){
     return (
