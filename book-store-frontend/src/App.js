@@ -4,6 +4,11 @@ import Landing from './Components/Landing/Landing';
 import Books from './Components/Books/Books';
 import MyCart from './Components/MyCart/MyCart';
 import { Button } from 'react-bootstrap';
+import { Provider } from 'react-redux';
+import store from './store';
+import Footer from './Components/Footer/Footer';
+import RetailerMain from './Components/RetailerMain/RetailerMain';
+
 
 function App() {
 
@@ -19,35 +24,49 @@ function App() {
 
   if (currentlyViewing === 'Landing'){
     return (
-      <div>
+      <Provider store={store}>
         <MyNavBar/>
         <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
         <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
         <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
         <Landing />
-      </div>
+        <Footer useCurrentlyViewing={useCurrentlyViewing} />
+      </Provider>
       )
   } else if (currentlyViewing === 'Books') {
       return (
-      <div>
+      <Provider store={store}>
         <MyNavBar/>
         <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
         <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
         <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
         <Books />
-      </div>
+        <Footer useCurrentlyViewing={useCurrentlyViewing} />
+      </Provider>
       )
     }
     else if (currentlyViewing === 'MyCart') {
        return (
-      <div>
+      <Provider store={store}>
         <MyNavBar/>
         <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
         <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
         <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
         <MyCart />
-      </div>
+        <Footer useCurrentlyViewing={useCurrentlyViewing} />
+      </Provider>
       )
+  } else if (currentlyViewing === 'Retailer'){
+    return(
+      <Provider store={store}>
+        <MyNavBar/>
+        <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
+        <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
+        <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
+        <RetailerMain />
+        <Footer useCurrentlyViewing={useCurrentlyViewing} />
+      </Provider>
+    )
   }
 
 }

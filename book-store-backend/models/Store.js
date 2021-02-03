@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Book = require('./Book')
 
 const StoreSchema = new Schema ({
-    inventory: { type: Array },
+    inventory: [Book],
+    orders:  []
 });
 
 module.exports = Store = mongoose.model('Store', StoreSchema);
