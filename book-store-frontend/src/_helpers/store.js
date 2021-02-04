@@ -1,13 +1,15 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers';
+import { createLogger } from 'react-logger'
+import rootReducer from '../_reducers';
 
 
 //inital app state
 const initialState = {};
 
 //middleware
-const middleware = [thunk];
+const loggerMiddleWare = createLogger();
+const middleware = [thunk, loggerMiddleWare];
 
 //...middleware (spread operator) because we want it to be added onto the middlware array
 const store = createStore(
