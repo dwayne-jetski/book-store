@@ -1,6 +1,6 @@
-import { userConstants } from '../_constants';
+import { userConstants } from '../_constants/user.constants';
 
-export function users(state = {}, action){
+export default function users(state = {}, action){
     switch (action.type){
         case userConstants.GETALL_REQUEST:
             return {
@@ -31,7 +31,7 @@ export function users(state = {}, action){
         case userConstants.DELETE_FAILURE:
             //remove 'deleting:true' property and add 'deleteError[error]' property to user
             return {
-                state...action,
+                ...state,
                 items: state.items.map(user => {
                     if (user.id === action.id) {
                         //make copy of user without 'deleting:true' property
