@@ -1,5 +1,5 @@
 import { Nav, Navbar, Col } from 'react-bootstrap'
-import DisplayLogin from '../Auth/Login'
+import DisplayLogin from '../Login/Login'
 import SearchBar from '../SearchBar/SearchBar'
 
 function MyNavBar() {

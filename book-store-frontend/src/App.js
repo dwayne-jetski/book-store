@@ -9,6 +9,8 @@ import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import MyNavBar from './Components/Navbar/Navbar';
 import Landing from './Components/Landing/Landing';
 import Books from './Components/Books/Books';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register'
 import MyCart from './Components/MyCart/MyCart';
 import Footer from './Components/Footer/Footer';
 import RetailerMain from './Components/RetailerMain/RetailerMain';
@@ -28,73 +30,18 @@ function App() {
     });
   }, []);
 
- /*  const [ currentlyViewing, useCurrentlyViewing ] = useState('Landing');
-
-  function ChangeState(newState){
-
-    useCurrentlyViewing(newState);
-    console.log(newState);
-  
-  } */
-
   return(
     <div>
       <MyNavBar />
       <Router history={history}>
         <Switch>
           <PrivateRoute exact path="/" component={Books} />
-          <Route path='/login' component={Landing} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
         </Switch>
       </Router>
     </div>
   )
-
-  /* if (currentlyViewing === 'Landing'){
-    return (
-      <div>
-        <MyNavBar/>
-        <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
-        <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
-        <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
-        <Landing />
-        <Footer useCurrentlyViewing={useCurrentlyViewing} />
-      </div>
-      )
-  } else if (currentlyViewing === 'Books') {
-      return (
-      <div>
-        <MyNavBar/>
-        <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
-        <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
-        <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
-        <Books />
-        <Footer useCurrentlyViewing={useCurrentlyViewing} />
-      </div>
-      )
-    }
-    else if (currentlyViewing === 'MyCart') {
-       return (
-      <div>
-        <MyNavBar/>
-        <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
-        <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
-        <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
-        <MyCart />
-        <Footer useCurrentlyViewing={useCurrentlyViewing} />
-      </div>
-      )
-  } else if (currentlyViewing === 'Retailer'){
-    return(
-      <Provider>
-        <MyNavBar/>
-        <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
-        <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
-        <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
-        <RetailerMain />
-        <Footer useCurrentlyViewing={useCurrentlyViewing} />
-      </Provider>
-    )
-  } */
 
 }
 

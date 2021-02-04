@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { NavDropdown, Button, FormControl, Form, Nav, Navbar, Col, Row} from 'react-bootstrap';
 import './Landing.css'
 
-import Registration from '../Auth/Register'
-import Login from '../Auth/Login'
+import Registration from '../Register/Register'
+import Login from '../Login/Login'
 
 function Landing () {
 
