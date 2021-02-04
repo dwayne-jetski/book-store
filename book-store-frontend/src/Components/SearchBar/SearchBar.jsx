@@ -17,7 +17,7 @@ function SearchBar(){
     const { values, handleChange, handleSubmit } = useForm(search);
 
     return(
-        <Form inline onSubmint={handleSubmit}>
+        <Form inline onSubmit={handleSubmit}>
           <Col>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" name="search" onChange={handleChange} value={values.search} />
           </Col>

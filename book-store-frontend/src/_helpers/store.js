@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import rootReducer from './reducers';
 
 
 //inital app state
@@ -10,6 +11,7 @@ const middleware = [thunk];
 
 //...middleware (spread operator) because we want it to be added onto the middlware array
 const store = createStore(
+    rootReducer,
     initialState, 
     compose(
         applyMiddleware(...middleware),

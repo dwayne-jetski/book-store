@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { NavDropdown, Button, FormControl, Form, Nav, Navbar, Col, Row} from 'react-bootstrap';
 import './Landing.css'
-import UseForm from '../UseForm/UseForm';
-import DisplayRegistration from '../Auth/Register'
-import DisplayLogin from '../Auth/Login'
+
+import Registration from '../Auth/Register'
+import Login from '../Auth/Login'
 
 function Landing () {
 
@@ -33,18 +33,18 @@ function Landing () {
                 <Row>
 
                     <Col>
-                        <Button variant="info" size="lg" block onClick={()=>LoadLogin('login')}>Login</Button>
+                        <Button variant="info" size="lg" block onClick={()=>LoadLogin('login')}>Login Form</Button>
                     </Col>
                     
                     <Col>
-                        <Button variant="info" size="lg" block onClick={()=>LoadRegister('register')}>Register</Button>
+                        <Button variant="info" size="lg" block onClick={()=>LoadRegister('register')}>Register Form</Button>
                     </Col>
 
                 </Row>
                 <Row>
                     <Col/>
 
-                        { authType === 'login' ? DisplayLogin('landing') : DisplayRegistration() }
+                        { authType === 'login' ? Login('landing') : Registration() }
 
                     <Col/>
                 </Row>

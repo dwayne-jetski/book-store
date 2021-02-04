@@ -6,7 +6,6 @@ import Books from './Components/Books/Books';
 import MyCart from './Components/MyCart/MyCart';
 import { Button } from 'react-bootstrap';
 import { Provider } from 'react-redux';
-import store from './store';
 import Footer from './Components/Footer/Footer';
 import RetailerMain from './Components/RetailerMain/RetailerMain';
 
@@ -24,41 +23,41 @@ function App() {
 
   if (currentlyViewing === 'Landing'){
     return (
-      <Provider store={store}>
+      <div>
         <MyNavBar/>
         <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
         <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
         <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
         <Landing />
         <Footer useCurrentlyViewing={useCurrentlyViewing} />
-      </Provider>
+      </div>
       )
   } else if (currentlyViewing === 'Books') {
       return (
-      <Provider store={store}>
+      <div>
         <MyNavBar/>
         <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
         <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
         <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
         <Books />
         <Footer useCurrentlyViewing={useCurrentlyViewing} />
-      </Provider>
+      </div>
       )
     }
     else if (currentlyViewing === 'MyCart') {
        return (
-      <Provider store={store}>
+      <div>
         <MyNavBar/>
         <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
         <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
         <Button onClick={()=>ChangeState('Landing')}> Change State: landing</Button>
         <MyCart />
         <Footer useCurrentlyViewing={useCurrentlyViewing} />
-      </Provider>
+      </div>
       )
   } else if (currentlyViewing === 'Retailer'){
     return(
-      <Provider store={store}>
+      <Provider>
         <MyNavBar/>
         <Button onClick={()=>ChangeState('MyCart')}> Change State: MyCart</Button>
         <Button onClick={()=>ChangeState('Books')}> Change State: books</Button>
