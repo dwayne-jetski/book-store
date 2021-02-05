@@ -6,8 +6,7 @@ const Retailer = new Schema ({
     email: { type: String },
     password: { type: String },
     type: { type: String, default: "retailer"},
-    inventory: [Book],
     orders:  []
 });
 
-module.exports = Store = mongoose.model('Store', StoreSchema);
+module.exports = Retailer = mongoose.model('Store', RetailerSchema);

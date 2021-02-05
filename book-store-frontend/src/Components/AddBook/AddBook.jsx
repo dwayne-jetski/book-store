@@ -5,7 +5,6 @@ import cors from 'cors';
 
 function AddBook(){
 
-    const CORS = cors();
 
     const [ values, setValues ] = useState({});
 
