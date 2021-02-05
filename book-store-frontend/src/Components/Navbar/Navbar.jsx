@@ -6,12 +6,12 @@ function MyNavBar() {
 
     return(
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home">Book Store!</Navbar.Brand>
+        <Navbar.Brand href="/books">Book Store!</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#books">Books</Nav.Link>
-          <Nav.Link href="#myCart">My Cart</Nav.Link>
-          <Nav.Link href="#myAccount">My Account</Nav.Link>
+          <Nav.Link href="/login" >login</Nav.Link>
+          <Nav.Link href="/register">register</Nav.Link>
+          <Nav.Link href="/retailermain">Retailer Main</Nav.Link>
+          <Nav.Link href="/books">Books</Nav.Link>
         </Nav>
         <Col xs={1} />
 

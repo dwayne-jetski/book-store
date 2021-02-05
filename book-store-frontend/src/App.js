@@ -6,7 +6,6 @@ import { history } from './_helpers/history';
 import { alertActions } from './_actions/alert.actions';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
-import SwitchRouterButtons from './Components/SwitchRouterButtons/SwitchRouterButtons'
 import MyNavBar from './Components/Navbar/Navbar';
 import Landing from './Components/Landing/Landing';
 import Books from './Components/Books/Books';
@@ -35,7 +34,6 @@ function App() {
     <div>
       <MyNavBar />
       <Router history={history}>
-      <SwitchRouterButtons />
         <Switch>
           <PrivateRoute exact path="/" component={Books} />
           <Route path='/login' component={Login} />
