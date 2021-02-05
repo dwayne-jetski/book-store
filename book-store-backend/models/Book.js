@@ -1,14 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const AuthorSchema = new Schema ({
+    type: String,
+});
+
+const SubjectSchema = new Schema ({
+    type: String,
+})
+
 const BookSchema = new Schema ({
+    publisher: {
+        type: String,
+    },
     title: {
         type: String,
         required: true
     },
     titleLong: {
         type: String,
-        required: true
+        
     },
     isbn: {
         type: String,
@@ -18,37 +29,33 @@ const BookSchema = new Schema ({
         type: String,
         required: true
     },
-    deweyDecimal: {
-        type: String,
-        required: true
-    },
     binding: {
         type: String,
-        required: true
+        
     },
     language: {
         type: String,
-        required: true
+        
     },
     datePublished: {
         type: String,
-        required: true
+        
     },
     edition: {
         type: String,
-        required: true
+        
     },
     pages: {
         type: Number,
-        required: true
+        
     },
     dimensions: {
         type: String,
-        required: true
+        
     },
     overview: {
         type: String,
-        required: true
+        
     },
     image: {
         type: String,
@@ -56,25 +63,21 @@ const BookSchema = new Schema ({
     },
     msrp: {
         type: Number,
-        required: true
+        
     },
     excerpt: {
         type: String,
-        required: true
+        
     },
     synopsis: {
         type: String,
         required: true
     },
     authors: {
-        author1: { type: String, required: true },
-        author2: { type: String },
-        author3: { type: String },
-        author4: { type: String },
-        author5: { type: String }
+        type: [AuthorSchema]
     },
     subjects: {
-        type: String,
+        type: [SubjectSchema],
         required: true
     },
     reviews: {

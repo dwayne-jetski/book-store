@@ -21,7 +21,7 @@ router.post('/register', (req, res) => {
 
     //check validation
     if(!isValid) {
-        return res.status(400).json(error);
+        return res.status(400).json(errors);
     }
 
     User.findOne({ email: req.body.email }).then(user => {
@@ -34,6 +34,8 @@ router.post('/register', (req, res) => {
                 email: req.body.email,
                 password: req.body.password
             });
+
+            console.log(newUser, req.body)
 
             //hash password before saving in database
             bycrypt.genSalt(10, (err, salt) => {
@@ -56,6 +58,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
     //form validation
 
+    console.log(req.body)
     const { errors, isValid } = validateLoginInput(req.body);
 
     //check validation

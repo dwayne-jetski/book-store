@@ -1,40 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { Form, FormControl, Button, Col, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import useForm from '../UseForm/UseForm';
+import { userActions } from '../../_actions/user.actions'
 
 function Login(component){
 
-    const login = () =>{
-
-        const loginCridentials ={
-            email: values.email,
-            password: values.password,
-        }
-
-        console.log(loginCridentials);
-
-    }
+    const [ inputs, setInputs ] = useState({ email: '', password: ''});
 
     const [submitted, setSubmitted] = useState(false);
+    const { email, password } = inputs;
+    const loggingIn = useSelector(state => state.authentication.loggingIn);
+    const dispatch = useDispatch();
+ 
+
     
 
+    function handleChange(e){
+        const { name, value} = e.target;
+        setInputs(inputs => ({...inputs, [name]: value}));
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        setSubmitted(true);
+        if(email && password){
+           
+            dispatch(userActions.login(email, password));
+        }
+    }
 
 
-
-    const { values, handleChange, handleSubmit } = useForm(login);
 
     if (component === 'navBar'){
         return(
             <Form inline onSubmit={handleSubmit}>
                 <Col>
-                    <FormControl type="email" placeholder="Email..." name="email" onChange={handleChange} value={values.email} className="mr-sm-2" required="true" />
+                    <FormControl type="email" placeholder="Email..." name="email" onChange={handleChange} value={email} className={'form-control' + (submitted && !email ? 'is-invalid' : '')} required={true} />
                 </Col>
                 <Col>
-                    <FormControl type="password" placeholder="Password..." name="password" onChange={handleChange} value={values.password} className = "mr-sm-2" required="true"/>                
+                    <FormControl type="password" placeholder="Password..." name="password" onChange={handleChange} value={password} className={'form-control' + (submitted && !password ? 'is-invalid' : '')} required={true}/>                
                 </Col>
                 <Col>
-                    <Button type="submit" variant="outline-info">Login</Button>
+                    <Button type="submit" variant="outline-info">{loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}Login</Button>
                 </Col>
             </Form>
         )
@@ -51,17 +61,15 @@ function Login(component){
                     </Row>
 
                     
-                    <Row>
-                        <Col />
+                    <Row>  
                         <Col>
                             <Form inline onSubmit={handleSubmit}>
-                                <FormControl type="email" placeholder="Email..." name="email" onChange={handleChange} value={values.email} className="mr-sm-2" required="true"/>
-                                <FormControl type="password" placeholder="Password..." name="password" onChange={handleChange} value={values.password} classNave = "mr-sm-2" required="true" />                                
-                                <Button type="submit" variant="info">Login</Button>
+                                <FormControl type="email" placeholder="Email..." name="email" onChange={handleChange} value={email} className={'form-control' + (submitted && !email ? 'is-invalid' : '')} required={true}/>
+                                <FormControl type="password" placeholder="Password..." name="password" onChange={handleChange} value={password} className={'form-control' + (submitted && !password ? 'is-invalid' : '')} required={true} />                                
+                                <Button type="submit" variant="info">{loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}Login</Button>
                                 <Link to="/register" className="btn btn-link">Register</Link>
                             </Form>
                         </Col>
-                        <Col/>
                     </Row>
 
                 </Col>

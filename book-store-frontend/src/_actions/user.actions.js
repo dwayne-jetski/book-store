@@ -1,7 +1,7 @@
-import { userConstants } from '../_constants';
-import { userService } from '../_services';
+import { userConstants } from '../_constants/user.constants';
+import { userService } from '../_services/user.service';
 import { alertActions } from './alert.actions';
-import { history } from '../_helpers';
+import { history } from '../_helpers/history';
 
 export const userActions = {
     login,
@@ -39,8 +39,11 @@ function logout(){
 
 function register(user){
 
+    console.log("Register Function: ",user);
+
     return dispatch => {
         dispatch(request(user));
+        console.log('made it through dispatch(request(user)): ', user)
 
         userService.register(user)
             .then(

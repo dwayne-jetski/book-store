@@ -1,5 +1,4 @@
 import axios from 'axios';
-import config from 'config';
 import { authHeader } from "../_helpers";
 
 export const userService = {
@@ -54,11 +53,13 @@ function register(userData){
         url: `http://localhost:5000/api/users/register`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify(userData)
 
     }
 
     axios(requestOptions).then(handleResponse);
+
+    
 }
 
 function getById(id){
@@ -99,11 +100,10 @@ function handleResponse(response){
         if(!response.ok){
             if(response.status = 401){
                 logout();
-                location.reload(true);
             }
 
             const error = (data && data.message) || response.statusText;
-            return Promise.reject(eror);
+            return Promise.reject(error);
         }
 
         return data;
