@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const AuthorSchema = new Schema ({
     type: String,
 });
@@ -53,10 +54,6 @@ const BookSchema = new Schema ({
         type: String,
         
     },
-    overview: {
-        type: String,
-        
-    },
     image: {
         type: String,
         required: true
@@ -71,7 +68,7 @@ const BookSchema = new Schema ({
     },
     synopsis: {
         type: String,
-        required: true
+        
     },
     authors: {
         type: [AuthorSchema]
@@ -82,7 +79,7 @@ const BookSchema = new Schema ({
     },
     reviews: {
         type: String,
-        required: true
+        
     },
     prices: {
         type: Number,

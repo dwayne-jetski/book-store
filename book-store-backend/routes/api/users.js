@@ -14,7 +14,7 @@ const { userInfo } = require('os');
 //@route POST api/users/register
 //@desc Register user
 //@access Public
-router.post('/register', (req, res) => {
+router.post('/users/register', (req, res) => {
     //form validation
     
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -55,7 +55,7 @@ router.post('/register', (req, res) => {
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
-router.post('/login', (req, res) => {
+router.post('/users/login', (req, res) => {
     //form validation
 
     console.log(req.body)

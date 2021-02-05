@@ -43,6 +43,7 @@ function App() {
           <Route path='/retailermain' component={RetailerMain} />
         </Switch>
       </Router>
+      <Footer />
     </div>
   )
 

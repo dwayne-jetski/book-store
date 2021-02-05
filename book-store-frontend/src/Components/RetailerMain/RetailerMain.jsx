@@ -2,32 +2,46 @@ import React, { useState } from 'react';
 import { Row, Col, Form, Button, FormControl } from 'react-bootstrap';
 import AddBook from '../AddBook/AddBook';
 import Inventory from '../Inventory/inventory';
+import EditBook from '../EditBook/EditBook'
 
 
 function RetailerMain(){
 
-    const [ displayAddBook, useDisplayAddBook ] =  useState(false);
-    const [ displayInventory, useDisplayInventory ] = useState(false);
+    const [ displayAddBook, setDisplayAddBook ] =  useState(false);
+    const [ displayInventory, setDisplayInventory ] = useState(false);
+    const [ displayEditBook, setDisplayEditBook ] = useState(false);
+    const [ bookToEdit, setBookToEdit ] = useState();
 
 
     function ToggleInventory(){
-        useDisplayInventory(!displayInventory);
-        useDisplayAddBook(false);
+        setDisplayInventory(!displayInventory);
+        setDisplayEditBook(false);
+        setDisplayAddBook(false);
     }
 
     function ToggleAddBook(){
-        useDisplayAddBook(!displayAddBook);
-        useDisplayInventory(false);
+        setDisplayAddBook(!displayAddBook);
+        setDisplayInventory(false);
+        setDisplayEditBook(false);
         console.log(displayAddBook)
+    }
+
+    function ToggleEditBook(id){
+        setDisplayEditBook(!displayEditBook)
+        
+        //axios.get to get book by id;
+
+        setBookToEdit(id);//this will eventually be set in the axios.get request for the book.
     }
 
     return(
         <React.Fragment>
             
-            <Col></Col>
             
             <Col>
-                <Row>
+                
+                <Row className="justify-content-md-center">
+                    <Col/>
                     <Col>
                     <Button onClick={ToggleAddBook} >Add Book</Button>
                     </Col>
@@ -42,19 +56,28 @@ function RetailerMain(){
                     <h1>See Book Requests</h1>
                     {/* Function for Book Requests */}
                     </Col>
+                    <Col/>
                 </Row>
+                
 
                 <Row>
                     <Col/>
                     <Col>
                         {!displayAddBook ? <div/> : <AddBook />}
-                        {!displayInventory ? <div/> : <Inventory />}
+                        {!displayInventory ? <div/> : <Inventory 
+                            ToggleEditBook={ToggleEditBook}
+                        />}
                     </Col>
-                    <Col />
+                    <Col> 
+                        {!displayEditBook ? <div /> : <EditBook 
+                        
+                        bookToEdit={bookToEdit}
+                        setBookToEdit={setBookToEdit}
+
+                        />}
+                    </Col>
                 </Row>
             </Col>
-
-            <Col></Col>
 
         </React.Fragment>
     )
