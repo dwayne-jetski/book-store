@@ -4,23 +4,43 @@ const Schema = mongoose.Schema;
 
 const AuthorSchema = new Schema ({
     type: String,
+    required: true,
+    
 });
 
 const SubjectSchema = new Schema ({
     type: String,
+    required: true,
 })
 
 const BookSchema = new Schema ({
-    publisher: {
-        type: String,
+    authors: {
+        type: [AuthorSchema]
     },
-    title: {
+    binding: {
+        type: String,
+        default: ''
+        
+    },
+    datePublished: {
+        type: String,
+        default: ''
+    },
+    dimensions: {
+        type: String,
+        default: ''
+    },
+    edition: {
+        type: String,
+        default: ''
+    },
+    image: {
         type: String,
         required: true
     },
-    titleLong: {
-        type: String,
-        
+    inventory: {
+        type: Number,
+        required: true
     },
     isbn: {
         type: String,
@@ -30,65 +50,48 @@ const BookSchema = new Schema ({
         type: String,
         required: true
     },
-    binding: {
-        type: String,
-        
-    },
     language: {
         type: String,
+        default: ''
         
     },
-    datePublished: {
-        type: String,
-        
-    },
-    edition: {
-        type: String,
+    msrp: {
+        type: Number,
+        default: ''
         
     },
     pages: {
         type: Number,
-        
+        default: ''
+
     },
-    dimensions: {
+    price: {
+        type: Number,
+        required: true
+    },
+    publisher: {
         type: String,
-        
+        default: ''
+
     },
-    image: {
+    title: {
         type: String,
         required: true
     },
-    msrp: {
-        type: Number,
-        
-    },
-    excerpt: {
+    titleLong: {
         type: String,
-        
-    },
-    synopsis: {
-        type: String,
-        
-    },
-    authors: {
-        type: [AuthorSchema]
+        default: ''
+
     },
     subjects: {
         type: [SubjectSchema],
         required: true
     },
-    reviews: {
+    synopsis: {
         type: String,
+        default: ''
         
     },
-    prices: {
-        type: Number,
-        required: true
-    },
-    inventory: {
-        type: Number,
-        required: true
-    }
 });
 
 module.exports = Book = mongoose.model('book', BookSchema);
