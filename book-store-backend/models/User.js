@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 //create Schema
+
+const creditCard = new Schema({
+    ccNumber: { type: Number, required: true, default: '' },
+    security: { type: Number, required: true },
+    zip_code: { type: Number, required: true }
+})
+
 const UserSchema = new Schema ({
     type: {
         type: String,
@@ -34,8 +42,24 @@ const UserSchema = new Schema ({
     orders: {
         type: Array,
         default: []
+    },
+    paymentMethods: {
+      type: [creditCard],
+      default: []
+
+    },
+    shippingAddress: {
+        address: { type: String, required: true, default: '' },
+        address2: { tyep: String, default: '' },
+        city: { type: String, require: true, default: '' },
+        state: { type: String, required: true, min: 2, max: 2, default: ''},
+        zip_code: { type: String, required: true, default: '' }
+
     }
+
 });
+
+
 
 
 module.exports = User = mongoose.model('users', UserSchema);

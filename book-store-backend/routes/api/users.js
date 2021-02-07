@@ -35,8 +35,6 @@ router.post('/users/register', (req, res) => {
                 password: req.body.password
             });
 
-            console.log(newUser, req.body)
-
             //hash password before saving in database
             bycrypt.genSalt(10, (err, salt) => {
                 bycrypt.hash(newUser.password, salt, (err, hash) => {

@@ -26,14 +26,19 @@ router.put(`/store`, (req, res) => {
 
 router.post(`/store/products`, (req, res) => {
     //create a product
+
+    console.log('Request: ',req.body);
+
     try {
+        console.log(req.body);
         const { error } = validateBook(req.body);
         if (error){
+            console.log(error);
             return res.status(400).send(error);
         }
 
         const book = new Book({
-            name: req.body.name,
+            authors: req.body.authors,
             binding: req.body.binding,
             datePublished: req.body.datePublished,
             dimensions: req.body.dimensions,
@@ -54,9 +59,14 @@ router.post(`/store/products`, (req, res) => {
 
         });
 
-        await book.save();
+        console.log("book: ", book, "req.body: ", req.body );
+
+        book.save();
+        
+        return res.send(book);
 
     } catch(ex) {
+        console.log(ex);
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 

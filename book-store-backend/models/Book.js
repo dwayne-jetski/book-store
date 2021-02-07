@@ -1,21 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
-const AuthorSchema = new Schema ({
-    type: String,
-    required: true,
-    
-});
-
-const SubjectSchema = new Schema ({
-    type: String,
-    required: true,
-})
-
 const BookSchema = new Schema ({
     authors: {
-        type: [AuthorSchema]
+        type: [String]
     },
     binding: {
         type: String,
@@ -57,12 +45,12 @@ const BookSchema = new Schema ({
     },
     msrp: {
         type: Number,
-        default: ''
+        default: 00
         
     },
     pages: {
         type: Number,
-        default: ''
+        default: 000
 
     },
     price: {
@@ -84,13 +72,13 @@ const BookSchema = new Schema ({
 
     },
     subjects: {
-        type: [SubjectSchema],
+        type: [String],
         required: true
     },
     synopsis: {
         type: String,
         default: ''
-        
+
     },
 });
 
