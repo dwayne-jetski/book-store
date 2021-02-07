@@ -13,6 +13,9 @@ const { userInfo } = require('os');
 
 router.post(`/store`, (req, res) => {
     //create a store
+
+
+
 });
 
 router.get(`/store`, (req, res) => {
@@ -27,10 +30,9 @@ router.put(`/store`, (req, res) => {
 router.post(`/store/products`, (req, res) => {
     //create a product
 
-    console.log('Request: ',req.body);
+   
 
     try {
-        console.log(req.body);
         const { error } = validateBook(req.body);
         if (error){
             console.log(error);
@@ -59,8 +61,6 @@ router.post(`/store/products`, (req, res) => {
 
         });
 
-        console.log("book: ", book, "req.body: ", req.body );
-
         book.save();
         
         return res.send(book);
@@ -86,9 +86,11 @@ router.get(`/store/products/:id`, async (req, res) => {
     //get a list of product by id
 
     try{ 
+
         const book = await Book.findById(req.params.id);
 
         if(!product){
+
             return res.status(400).send(`The product with id "${req.params.id}" does not exist`)
         }
         
@@ -99,6 +101,8 @@ router.get(`/store/products/:id`, async (req, res) => {
 
 });
 
+
+//may just take care of this on the front end by filtering the array
 router.get(`store/products/subject`, (req, res) => {
     //get a list of products by subject
     const subject = req.subject;
