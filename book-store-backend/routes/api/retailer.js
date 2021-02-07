@@ -72,12 +72,31 @@ router.post(`/store/products`, (req, res) => {
 
 });
 
-router.get(`/store/products`, (req, res) =>{
+router.get(`/store/products`, async (req, res) =>{
     //get a list of ALL products
+    try{
+        const books = await Book.find();
+        return res.send(books); 
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
 });
 
-router.get(`/store/products/:id`, (req, res) => {
+router.get(`/store/products/:id`, async (req, res) => {
     //get a list of product by id
+
+    try{ 
+        const book = await Book.findById(req.params.id);
+
+        if(!product){
+            return res.status(400).send(`The product with id "${req.params.id}" does not exist`)
+        }
+        
+        return res.send(book);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+
 });
 
 router.get(`store/products/subject`, (req, res) => {
