@@ -11,19 +11,50 @@ const Retailer = require('../../models/Retailer');
 const Book = require('../../models/Book');
 const { userInfo } = require('os');
 
-router.post(`/store`, (req, res) => {
+router.post(`/store/createstore`, (req, res) => {
     //create a store
 
+    try { 
+
+        const retailer = new Retailer;
+
+        retailer.save();
+        return res.send(retailer)
+
+    } catch(ex) {
+        console.log(ex);
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
 
 
 });
 
 router.get(`/store`, (req, res) => {
     //get store info
+
+    
+
 });
 
-router.put(`/store`, (req, res) => {
+router.put(`/store/newUser`, (req, res) => {
     //edit store info
+
+    Retailer.findByIdAndUpdate(
+        req.params.id,
+
+        //the change to be made. Mongoose will smartly combinde your existing document with this change which allows for partial updates too
+        req.body,
+
+        //an option that asks mongoose to run the updated version of the document instead of the pre-updated one
+        {new: true},
+
+        // the calback function
+        (err, retailer) => {
+            //handle any possible database errors
+            if (err) return res.status.send(err);
+            return res.send(retailer);
+        }
+    );
 
 });
 

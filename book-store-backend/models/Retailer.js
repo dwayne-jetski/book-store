@@ -5,14 +5,16 @@ const Book = require('./Book')
 const storeUser = new Schema ({
 
     email: { type: String },
+    userName: { type: String},
     password: { type: String },
 
 
 });
 
 const RetailerSchema = new Schema ({
-    users: { type: Array, required: true, default: [ {email: "admin", password: "password1234"} ] },
-    type: { type: String, default: "retailer"},
+    users: { type: Array, default: [ {email: "store@email.com", userName: "admin", password: "password1234"} ] },
+    accountType: { type: String, default: "retailer"},
+    date: { type: Date, default: Date.now },
     orders:  {type: Array, default: [] }
 });
 
