@@ -59,6 +59,8 @@ router.post(`/store/login`, (req, res) => {
 
     console.log(req.body)
     const { errors, isValid } = validateLoginInput(req.body);
+    console.log(req.body);
+
 
     //check validation
     if(!isValid) {
@@ -127,6 +129,18 @@ router.get(`/store/:id`, async (req, res) => {
 
 router.post(`/store/neworder`, async (req, res) => {
     //here is where the function to add a new order to the orders array will go.
+
+    Retailer.findByIdAndUpdate({
+        _id: req.body.storeId 
+    }, { 
+        $push: {
+
+
+
+          }
+    }, (err) => {
+
+    })
 
 });
 
@@ -209,12 +223,13 @@ router.post(`/store/products`, (req, res) => {
 
 });
 
-router.get(`/store/products`, async (req, res) =>{
+router.get(`/store/products/all`, async (req, res) =>{
     //get a list of ALL products
     try{
         const books = await Book.find();
         return res.send(books); 
     } catch (ex) {
+        console.log(ex);
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 });

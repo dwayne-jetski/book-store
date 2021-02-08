@@ -22,6 +22,7 @@ module.exports = function validateBook(data) {
         titleLong: Joi.string().min(1).max(200),
         subjects: Joi.array().items(Joi.string().min(1)).required(),
         synopsis: Joi.string().min(10).max(600),
+        storeId: Joi.string()
         
     });
 

@@ -1,8 +1,8 @@
 import { Nav, Navbar, Col } from 'react-bootstrap'
-import DisplayLogin from '../Login/Login'
+import UserLogin from '../UserLogin/UserLogin'
 import SearchBar from '../SearchBar/SearchBar'
 
-function MyNavBar() {
+function MyNavBar(props) {
 
     return(
       <Navbar bg="dark" variant="dark">
@@ -20,7 +20,6 @@ function MyNavBar() {
         </Col>
 
         <Col xs={4}>
-          {DisplayLogin('navBar')}
         </Col>
       
       </Navbar>

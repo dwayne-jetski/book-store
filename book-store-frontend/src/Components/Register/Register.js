@@ -1,43 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../_actions/user.actions'
 import useForm from '../UseForm/UseForm';
+import axios from 'axios';
 
 
-  function Registration(){
+  function Registration(props){
 
 
-    const [ user, setUser ] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        password2: '',
-    });
-    const [ submitted, setSubmitted ] = useState(false);
-    /* const registering = useSelector (state => state.registration.registering); */
-    const dispatch = useDispatch();
+    const  register = () => {
 
-    //resets login status
- /*    useEffect(() => {
-        dispatch(userActions.logout())
-    }, []); */
+        const url = "http://localhost:5000/api/users/register"
 
-    function handleChange(e) {
-        const { name, value } =  e.target
-        setUser(user => ({...user, [name]: value}));
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        setSubmitted(true);
-        if(user.firstName && user.lastName && user.email && user.password && user.password2){
-            dispatch(userActions.register(user));
+        const newUser = {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            password: values.password,
+            password2: values.password2
         }
+
+        console.log("newUser: ", newUser);
+
+        axios.post("http://localhost:5000/api/users/register", newUser)
+        .then(res => {
+            console.log(res);
+            /* return <Redirect to={{ pathname: '/login', state: { from: props.location } }} /> */
+        })
+        .catch()
+        
     }
+
+    const { values, handleSubmit, handleChange } = useForm(register);
 
     return(
 
@@ -54,11 +50,11 @@ import useForm from '../UseForm/UseForm';
                 
                     <Col/>
                         <Form onSubmit={handleSubmit}>
-                            <Form.Control type="text" name="firstName" placeholder="First Name" required={true} value={user.firstName} onChange={handleChange} />
-                            <Form.Control type="text" name="lastName" placeholder="Last Name" required={true} value={user.lastName} onChange={handleChange} />
-                            <Form.Control type="email" name="email" placeholder="Email" required={true} value={user.email} onChange={handleChange} />
-                            <FormControl type="password" name="password" placeholder="Password 8-32 Characters" className = "mr-sm-2" value={user.password} onChange={handleChange} />
-                            <Form.Control type="password" name="password2" placeholder="Confirm password" required={true} value={user.password2} onChange={handleChange} />
+                            <Form.Control type="text" name="firstName" placeholder="First Name" required={true} value={values.firstName} onChange={handleChange} />
+                            <Form.Control type="text" name="lastName" placeholder="Last Name" required={true} value={values.lastName} onChange={handleChange} />
+                            <Form.Control type="email" name="email" placeholder="Email" required={true} value={values.email} onChange={handleChange} />
+                            <FormControl type="password" name="password" placeholder="Password 8-32 Characters" className = "mr-sm-2" value={values.password} onChange={handleChange} />
+                            <Form.Control type="password" name="password2" placeholder="Confirm Password" required={true} value={values.password2} onChange={handleChange} />
                             <Button type="submit" variant="info">Register</Button>
                             <Link to='/login' className="btn btn-link">Login</Link>
                         </Form>

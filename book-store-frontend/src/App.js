@@ -1,45 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
-
-import { history } from './_helpers/history';
-import { alertActions } from './_actions/alert.actions';
+import { BrowserRouter as Router, Switch, Route, Redirect, Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
 import MyNavBar from './Components/Navbar/Navbar';
-import Landing from './Components/Landing/Landing';
 import Books from './Components/Books/Books';
-import Login from './Components/Login/Login';
+import UserLogin from './Components/UserLogin/UserLogin';
 import Register from './Components/Register/Register'
 import MyCart from './Components/MyCart/MyCart';
 import Footer from './Components/Footer/Footer';
 import RetailerMain from './Components/RetailerMain/RetailerMain';
 
 import { Button } from 'react-bootstrap';
+import { render } from '@testing-library/react';
 
 
 function App() {
 
-  const alert = useSelector(state => state.alert);
-  const dispatch = useDispatch();
-
-  useEffect(()=> {
-    history.listen((location, action) => {
-      //clear alert on location change
-      dispatch(alertActions.clear());
-    });
-  }, []);
+  const [ currentUser, setCurrentUser ] = useState({});
+  const history = useHistory();
 
   return(
     <div>
-      <MyNavBar />
+      <MyNavBar setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
       <Router history={history}>
         <Switch>
-          <PrivateRoute exact path="/" component={Books} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-          <Route path='/retailermain' component={RetailerMain} />
-          <Route path='/books' component={Books} />
+          <PrivateRoute exact path="/"> 
+            <Books setCurrentUser={setCurrentUser} currentUser={currentUser}  />
+          </PrivateRoute>
+          <Route path='/books'> 
+            <Books setCurrentUser={setCurrentUser} currentUser={currentUser}  />
+          </Route>
+          <Route path='/login'> 
+            <UserLogin setCurrentUser={setCurrentUser} currentUser={currentUser}  /> 
+          </Route>
+          <Route path='/register'> 
+            <Register setCurrentUser={setCurrentUser} currentUser={currentUser}  /> 
+          </Route>
+          <Route path='/retailermain'> 
+            <RetailerMain setCurrentUser={setCurrentUser} currentUser={currentUser}  />
+          </Route>
         </Switch>
       </Router>
       <Footer />

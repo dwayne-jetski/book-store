@@ -1,16 +1,18 @@
 const connectDB = require('./startup/db');
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const passport = require('passport');
-
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const cors = require('cors');
 const users = require('./routes/api/users');
 const retailer = require('./routes/api/retailer'); 
-
 const app = express();
 
-//Bodyparser middleware
 
+
+//Bodyparser middleware
+app.use(cors());
+app.use(express.json());
 app.use(
     bodyParser.urlencoded({
         extended: false

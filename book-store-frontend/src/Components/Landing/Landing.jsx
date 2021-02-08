@@ -3,7 +3,7 @@ import { NavDropdown, Button, FormControl, Form, Nav, Navbar, Col, Row} from 're
 import './Landing.css'
 
 import Registration from '../Register/Register'
-import Login from '../Login/Login'
+import Login from '../UserLogin/UserLogin'
 
 function Landing () {
 

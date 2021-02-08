@@ -10,13 +10,13 @@ const useForm = (callback) => {
         event.persist();
 
         setValues(values => ({...values, [event.target.name]: event.target.value}));
-
+        console.log(values);
     }
 
     const handleSubmit = (event) =>{
 
         event.preventDefault();
-
+        console.log(values);
         callback();
     }
 

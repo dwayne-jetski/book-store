@@ -20,7 +20,11 @@ const { userInfo } = require('os');
 router.post('/users/register', (req, res) => {
     //form validation
     
+    console.log(req.body)
+
     const { errors, isValid } = validateRegisterInput(req.body);
+
+    console.log(req.body)
 
     //check validation
     if(!isValid) {
@@ -61,6 +65,7 @@ router.post('/users/login', (req, res) => {
 
     console.log(req.body)
     const { errors, isValid } = validateLoginInput(req.body);
+    console.log(req.body);
 
     //check validation
     if(!isValid) {
@@ -109,6 +114,21 @@ router.post('/users/login', (req, res) => {
             }
         });
     });
+});
+
+router.get(`/users/:id`, async (req, res) => {
+    //get store info
+    try{
+        const user = await User.findById(req.params.id);
+        if(!user){
+            return res.status(400).send(`The store with id "${req.params.id}" does not exist...`);
+        }
+        return res.send(user);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+    
+
 });
 
 module.exports = router;

@@ -80,6 +80,10 @@ const BookSchema = new Schema ({
         default: ''
 
     },
+    storeId: {
+        type: String,
+        default: '6020bd97c3430e64b4f173ed'
+    }
 });
 
 module.exports = Book = mongoose.model('book', BookSchema);

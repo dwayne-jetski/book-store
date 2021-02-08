@@ -49,11 +49,11 @@ const UserSchema = new Schema ({
 
     },
     shippingAddress: {
-        address: { type: String, required: true, default: '' },
+        address: { type: String,  default: '' },
         address2: { tyep: String, default: '' },
-        city: { type: String, require: true, default: '' },
-        state: { type: String, required: true, min: 2, max: 2, default: ''},
-        zip_code: { type: String, required: true, default: '' }
+        city: { type: String,  default: '' },
+        state: { type: String, min: 2, max: 2, default: ''},
+        zip_code: { type: String, default: '' }
 
     }
 
