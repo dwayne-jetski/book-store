@@ -5,24 +5,23 @@ const Joi = require('joi');
 const Validator = require('validator');
 const isEmpty = require('is-empty');
 
-module.exports = function validateNewRetailUserInput(data) {
+module.exports = function validateNewRetailInput(data) {
     let errors = {};
 
     //convert empty fields to an empty string so we can use validator functions
-    data.storeId = !isEmpty(data.storeId) ? data.storeId :  "";
-    data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
-    data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
+    data.storeName = !isEmpty(data.storeName) ? data.storeName : "";
+    userName = !isEmpty(data.userName) ? data.userName : "";
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password : "";
 
     //name checks
-    if(Validator.isEmpty(data.firstName)) {
-        errors.firstName = "First Name field is required...";
+    if(Validator.isEmpty(data.storeName)) {
+        errors.firstName = "Store Name field is required...";
     }
 
-    if(Validator.isEmpty(data.lastName)) {
-        errors.lastName = "Last Name field is required...";
+    if(Validator.isEmpty(data.userName)) {
+        errors.lastName = "Username field is required...";
     }
 
     //email checks

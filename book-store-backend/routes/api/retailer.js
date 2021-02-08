@@ -6,36 +6,108 @@ const keys = require('../../config/keys');
 
 //load input validation
 const validateBook = require('../../validation/book');
-const validateNewRetailUserInput = require("../../validation/retailer");
+const validateNewRetailerInput = require("../../validation/retailer");
+const validateLoginInput = require("../../validation/login");
 
 
 const Retailer = require('../../models/Retailer');
 const Book = require('../../models/Book');
+const storeUserSchema = require('../../models/Retailer');
 const { userInfo } = require('os');
 
+
+//@route POST api/store/createstore
+//@desc Register user
+//@access Public
 router.post(`/store/createstore`, (req, res) => {
     //create a store
 
-    try { 
+    const { errors, isValid } = validateNewRetailerInput(req.body);
 
-        const retailer = new Retailer;
-
-        retailer.save();
-        return res.send(retailer)
-
-    } catch(ex) {
-        console.log(ex);
-        return res.status(500).send(`Internal Server Error: ${ex}`);
+    //check validation
+    if(!isValid){
+        return res.status(400).json(errors);
     }
 
+    Retailer.findOne({ email: req.body.email }).then(retailer => {
+        if(retailer) {
+            return res.status(400).json({ email: "Email Already Exists" })
+        } else {
+            const newRetailer = new Retailer({
+                storeName: req.body.storeName,
+                userName: req.body.userName,
+                email: req.body.email,
+                password: req.body.password
+            });
 
+            bycrypt.genSalt(10, (err, salt) => {
+                bycrypt.hash(newRetailer.password, salt, (err, hash) => {
+                    if (err) throw (err);
+                    newRetailer.password = hash;
+                    newRetailer
+                        .save()
+                        .then(retailer => res.json(retailer))
+                        .catch(err => console.log(err));
+                });
+            });
+        }
+    });
 });
 
-router.post(`/store/createnewuser`, async (req, res) => {
+router.post(`/store/login`, (req, res) => {
+    //form validation
 
-    const { errors, isValid } = validateNewRetailUserInput(req.body);
-    
-})
+    console.log(req.body)
+    const { errors, isValid } = validateLoginInput(req.body);
+
+    //check validation
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    //find user by email
+    Retailer.findOne({ email }).then(retailer => {
+        //check if user exists
+        if(!retailer) {
+            res.status(404).json({ emailnotfound: "Email not found"
+    })
+        }
+
+        //check password
+        bycrypt.compare(password, retailer.password).then(isMatch => {
+            if (isMatch) {
+                //user matched
+                //create JWT Payload
+                const payload = {
+                    id: retailer.id,
+                    name: retailer.name
+                };
+
+                //sign token
+                jwt.sign(
+                    payload,
+                    keys.secretOrKey,
+                    {
+                        expiresIn: 3155629236 //1 year in seconds
+                    },
+                    (err, token) => {
+                        res.json({
+                            success: true,
+                            token: "Bearer " + token
+                        });
+                    }
+                );
+            } else {
+                return res
+                .status(400)
+                .json({ passwordincorrect: "Password incorrect"});
+            }
+        });
+    });
+});
 
 
 router.get(`/store`, async (req, res) => {

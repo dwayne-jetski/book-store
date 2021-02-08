@@ -11,6 +11,9 @@ const validateLoginInput = require('../../validation/login');
 const User = require('../../models/User');
 const { userInfo } = require('os');
 
+
+
+
 //@route POST api/users/register
 //@desc Register user
 //@access Public
