@@ -110,11 +110,14 @@ router.post(`/store/login`, (req, res) => {
 });
 
 
-router.get(`/store`, async (req, res) => {
+router.get(`/store/:id`, async (req, res) => {
     //get store info
     try{
-        const retailer = await Retailer.find();
-        return res.send(retailer); 
+        const retailer = await Retailer.findById(req.params.id);
+        if(!retailer){
+            return res.status(400).send(`The store with id "${req.params.id}" does not exist...`);
+        }
+        return res.send(retailer);
     } catch (ex) {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
@@ -122,7 +125,24 @@ router.get(`/store`, async (req, res) => {
 
 });
 
-router.put(`/store`, (req, res) => {
+router.post(`/store/neworder`, async (req, res) => {
+    //here is where the function to add a new order to the orders array will go.
+
+});
+
+router.put(`/store/completedorder`, async (req, res) => {
+    //this is where the function to add an existing order to the completed orders array will go
+    //push to completed orders, pop from open orders
+});
+
+router.put(`/store/uncompleteorder`), async (req, res) => {
+    //this is where the funciotn will go to move completed order back to open orders
+    //push to open orders, pop from completed orders
+}
+
+
+
+router.put(`/store/update`, (req, res) => {
     //edit store info
 
     Retailer.findByIdAndUpdate(
@@ -206,7 +226,7 @@ router.get(`/store/products/:id`, async (req, res) => {
 
         const book = await Book.findById(req.params.id);
 
-        if(!product){
+        if(!book){
 
             return res.status(400).send(`The product with id "${req.params.id}" does not exist`)
         }

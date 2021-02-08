@@ -12,7 +12,8 @@ const RetailerSchema = new Schema ({
     password: { type: String, required: true},
     accountType: { type: String, default: "retailer"},
     date: { type: Date, default: Date.now },
-    orders:  {type: Array, default: [] }
+    openOrders:  {type: Array, default: [] },
+    completedOrders: { type: Array, default: [] }
 });
 
 module.exports = Retailer = mongoose.model('Store', RetailerSchema);
