@@ -6,6 +6,8 @@ const keys = require('../../config/keys');
 
 //load input validation
 const validateBook = require('../../validation/book');
+const validateNewRetailUserInput = require("../../validation/retailer");
+
 
 const Retailer = require('../../models/Retailer');
 const Book = require('../../models/Book');
@@ -29,14 +31,26 @@ router.post(`/store/createstore`, (req, res) => {
 
 });
 
-router.get(`/store`, (req, res) => {
-    //get store info
+router.post(`/store/createnewuser`, async (req, res) => {
 
+    const { errors, isValid } = validateNewRetailUserInput(req.body);
+    
+})
+
+
+router.get(`/store`, async (req, res) => {
+    //get store info
+    try{
+        const retailer = await Retailer.find();
+        return res.send(retailer); 
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
     
 
 });
 
-router.put(`/store/newUser`, (req, res) => {
+router.put(`/store`, (req, res) => {
     //edit store info
 
     Retailer.findByIdAndUpdate(
