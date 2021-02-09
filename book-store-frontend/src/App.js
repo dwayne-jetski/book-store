@@ -21,23 +21,23 @@ function App() {
 
   return(
     <div>
-      <MyNavBar setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
+      <MyNavBar setCurrentUser={setCurrentUser} currentUser={currentUser} />
       <Router history={history}>
         <Switch>
           <PrivateRoute exact path="/"> 
-            <Books setCurrentUser={setCurrentUser} currentUser={currentUser}  />
+            <Books setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
           </PrivateRoute>
           <Route path='/books'> 
-            <Books setCurrentUser={setCurrentUser} currentUser={currentUser}  />
+            <Books setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
           </Route>
           <Route path='/login'> 
-            <UserLogin setCurrentUser={setCurrentUser} currentUser={currentUser}  /> 
+            <UserLogin setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} /> 
           </Route>
           <Route path='/register'> 
-            <Register setCurrentUser={setCurrentUser} currentUser={currentUser}  /> 
+            <Register setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} /> 
           </Route>
           <Route path='/retailermain'> 
-            <RetailerMain setCurrentUser={setCurrentUser} currentUser={currentUser}  />
+            <RetailerMain setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
           </Route>
         </Switch>
       </Router>

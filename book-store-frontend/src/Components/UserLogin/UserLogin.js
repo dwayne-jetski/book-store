@@ -7,7 +7,7 @@ import useForm from '../UseForm/UseForm';
 
 import axios from 'axios';
 
-function Login(props, component){
+function Login(props){
     const { values, handleChange, handleSubmit } = useForm()
 
    const UserLogin = (e) => {

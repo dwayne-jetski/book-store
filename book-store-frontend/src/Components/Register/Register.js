@@ -8,7 +8,7 @@ import axios from 'axios';
   function Registration(props){
 
 
-    const  register = () => {
+    const  register = (e) => {
 
         const url = "http://localhost:5000/api/users/register"
 
@@ -22,13 +22,14 @@ import axios from 'axios';
 
         console.log("newUser: ", newUser);
 
-        axios.post("http://localhost:5000/api/users/register", newUser)
+        axios.post(url, newUser)
         .then(res => {
             console.log(res);
-            /* return <Redirect to={{ pathname: '/login', state: { from: props.location } }} /> */
         })
-        .catch()
+        .catch(err => console.log(err));
         
+        props.history.push('/login');
+
     }
 
     const { values, handleSubmit, handleChange } = useForm(register);
