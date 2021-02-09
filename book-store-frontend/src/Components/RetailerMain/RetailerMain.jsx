@@ -26,12 +26,12 @@ function RetailerMain(){
         console.log(displayAddBook)
     }
 
-    function ToggleEditBook(id){
+    function ToggleEditBook(e,data){
         setDisplayEditBook(!displayEditBook)
         
         //axios.get to get book by id;
 
-        setBookToEdit(id);//this will eventually be set in the axios.get request for the book.
+        setBookToEdit(e.target.id);//this will eventually be set in the axios.get request for the book.
     }
 
     return(

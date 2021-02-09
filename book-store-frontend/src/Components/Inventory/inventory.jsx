@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Row, Col, Form, FormControl, Table } from 'react-bootstrap';
+import axios from 'axios';
+
 
 function Inventory(props) {
 
-    
+    const [ bookData, setBookData ] = useState(null);
+    const [ filteredResults, setFilteredResults ] = useState(null);
+    const [ loading, setLoading ] = useState(true)
 
-    let _id = 123456789;
+    useEffect(() => { 
+    
+        axios.get('http://localhost:5000/api/store/products/all')
+            .then(res => {
+                console.log("response: ", res);
+                setBookData(res.data);
+                setLoading(false);
+        });
+
+    }, [])
+
+
+    const buildTable = () => {
+        
+        
+
+        return ( loading ? <div>loading...</div> : 
+
+            bookData.map((data, index) => {
+                const { _id, title, authors, subjects, isbn, price, inventory, isbn13 } = data;
+
+                return(
+                    <tr>
+                        <td>{_id}</td>
+                        <td>{title}</td>
+                        <td>{authors}</td>
+                        <td>{subjects}</td>
+                        <td>{(isbn) ? isbn : isbn13}</td>
+                        <td>{price}</td>
+                        <td>{inventory}</td>
+                        <td><Button id={_id} onClick={(e)=>props.ToggleEditBook(e, bookData)}>EDIT</Button></td>
+                    </tr>
+                )
+            })
+
+        )
+
+    }
 
     return(
         
@@ -23,16 +64,7 @@ function Inventory(props) {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{_id}</td>
-                    <td>Book Title</td>
-                    <td>My Name</td>
-                    <td>Action</td>
-                    <td>1234567890123</td>
-                    <td>19.95</td>
-                    <td>15</td>
-                    <td><Button id={_id} onClick={()=>props.ToggleEditBook(_id)}>EDIT</Button></td>
-                </tr>
+                {buildTable()}
             </tbody>
         </Table>
 

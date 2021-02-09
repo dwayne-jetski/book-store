@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const BookSchema = new Schema ({
     authors: {
-        type: [String]
+        type: String
     },
     binding: {
         type: String,
@@ -32,11 +32,11 @@ const BookSchema = new Schema ({
     },
     isbn: {
         type: String,
-        required: true
+        
     },
     isbn13: {
         type: String,
-        required: true
+        
     },
     language: {
         type: String,
@@ -72,7 +72,7 @@ const BookSchema = new Schema ({
 
     },
     subjects: {
-        type: [String],
+        type: String,
         required: true
     },
     synopsis: {

@@ -46,12 +46,7 @@ function Books(props){
                         
                         <Card.Body >
                             <Card.Title className="image_style">{title}</Card.Title>
-                            <Card.Title>Authors: 
-                                {authors.map((data, index) => {
-                                    return(`${data}, `)
-                                }) 
-                                }
-                            </Card.Title>
+                            <Card.Title>Authors: {authors} </Card.Title>
                             <Card.Text>
                             Synopsis: {synopsis}
                             </Card.Text>
@@ -60,7 +55,7 @@ function Books(props){
                                 isbn: {(isbn) ? isbn : isbn13}<br/>
                                 Language: {language}<br/>
                                 Page Count: {pages}<br/>
-                                Subjects: {subjects.map((data, index) => { return(`${data} `) } ) }<br/>
+                                Subjects: {subjects}<br/>
                             </Card.Text>
                             <Card.Text>
                                 Price: ${price}
@@ -82,8 +77,8 @@ function Books(props){
 
             </Col>
 
-            <Col xs={6}>
-                <h1>Hello: {(props.currentUser === null) ? "Guest" : props.currentUser.firstName}</h1>
+            <Col xs={8}>
+                <h1>Hello: {(props.currentUser === null) ? "Guest" : props.currentUser.firstName + ' ' + props.currentUser.lastName}</h1>
 
 
                 <Form>

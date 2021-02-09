@@ -178,9 +178,10 @@ router.put(`/store/update`, (req, res) => {
 
 });
 
-router.post(`/store/products`, (req, res) => {
+router.post(`/store/newbook`, (req, res) => {
     //create a product
 
+    console.log(req.body);
    
 
     try {

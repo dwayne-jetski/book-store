@@ -7,6 +7,18 @@ function EditBook(props){
 
     const [ newBook, setNewBook ] = useState(null);
 
+
+    useEffect(()=> {
+        
+        const url = 'http://localhost:5000/api/store/products/'+props.bookToEdit
+
+        axios.get(url).then(res=> {
+            console.log(res.data);
+            setValues(res.data);
+        })
+    }, [])
+
+
     const HandleChange = (event) =>{
 
         event.persist();
@@ -30,7 +42,7 @@ function EditBook(props){
     return(
         <React.Fragment>
             <Row>
-               {props.bookToEdit}
+                <h1>Now Editing: {values.title}</h1>
             </Row>
             
                 <Form>

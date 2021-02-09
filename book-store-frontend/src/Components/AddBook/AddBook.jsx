@@ -10,6 +10,8 @@ function AddBook(){
 
     const [ newBook, setNewBook ] = useState(null);
 
+    const [ bookSubmission, setBookSubmission ] = useState(null);
+
     const HandleChange = (event) =>{
 
         event.persist();
@@ -22,6 +24,41 @@ function AddBook(){
 
         event.preventDefault();
 
+        const url = "http://localhost:5000/api/store/newbook"
+
+       
+
+        setBookSubmission({
+                isbn: values.isbn, 
+                authors: values.authors,
+                binding: values.binding,
+                datePublished: values.date_published,
+                dimensions: values.dimensions,
+                edition: values.edition,
+                image: values.image,
+                isbn13: values.isbn13,
+                language: values.language,
+                msrp: values.msrp,
+                pages: values.pages,
+                datePublished: values.publish_date,
+                publisher: values.publisher,
+                title: values.title,
+                titleLong: values.title_long,
+                subjects: values.subjects,
+                synopsis: values.synopsis,
+                price: parseFloat(values.price),
+                inventory: parseFloat(values.inventory),
+                price: values.price,
+
+        })
+
+        console.log("newBook: ", bookSubmission);
+
+        axios.post(url, bookSubmission).then(res =>{
+                console.log(res.data)
+                
+            })
+            
         
     }
 
@@ -39,7 +76,7 @@ function AddBook(){
 
             setValues({
                 isbn: newBook.isbn, 
-                authors: newBook.authors,
+                authors: newBook.authors[0],
                 binding: newBook.binding,
                 datePublished: newBook.date_published,
                 dimensions: newBook.dimensions,
@@ -52,9 +89,11 @@ function AddBook(){
                 datePublished: newBook.publish_date,
                 publisher: newBook.publisher,
                 title: newBook.title,
-                titleLong: newBook.title_long
+                titleLong: newBook.title_long,
+                subjects: newBook.subjects
     
             })
+            console.log("newBook: ", newBook);
         })
         .catch(err => {
             console.log('Error: ', err);
@@ -74,7 +113,7 @@ function AddBook(){
                     <Form.Control onChange={HandleChange} type="text" name="isbn" placeholder="ISBN" value={values.isbn} /> 
                     <Button onClick={()=> GetBookDetails()}>GET DETAILS?</Button>
                     <br/><br/>
-                    <h5>Authors: </h5>
+                    <h5>Author: </h5>
                     <Form.Control onChange={HandleChange} type="text" name="authors" placeholder="Author, separate by commas" value={values.authors} />
                     <h5>Binding: </h5>
                     <Form.Control onChange={HandleChange} type="text" name="binding" placeholder="Binding" value={values.binding} />

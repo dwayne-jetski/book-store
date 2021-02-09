@@ -4,7 +4,7 @@ const Joi = require('joi');
 module.exports = function validateBook(data) {
 
     const bookSchema = Joi.object({
-        authors: Joi.array().items(Joi.string()).required(),
+        authors: Joi.string().required(),
         binding: Joi.string().min(0).max(200),
         datePublished: Joi.string().min(0).max(100),
         dimensions: Joi.string().min(0).max(100),
@@ -20,8 +20,8 @@ module.exports = function validateBook(data) {
         publisher: Joi.string(),
         title: Joi.string().min(1).max(200).required(),
         titleLong: Joi.string().min(1).max(200),
-        subjects: Joi.array().items(Joi.string().min(1)).required(),
-        synopsis: Joi.string().min(10).max(600),
+        subjects: Joi.string().min(1).required(),
+        synopsis: Joi.string().max(600),
         storeId: Joi.string()
         
     });
