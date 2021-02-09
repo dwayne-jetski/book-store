@@ -1,30 +1,80 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import { Button, Col, Row, Form, FormControl, Card } from 'react-bootstrap';
+import useForm from '../UseForm/UseForm';
+import './Books.css'
 
 function Books(props){
 
-    const [ data, setData ] = useState({});
+    const [ bookData, setBookData ] = useState(null);
+    const { values, handleSubmit, handleChange } = useForm();
 
-    const GetData = () => {
-        
+
+    useEffect(() => {
         axios.get('http://localhost:5000/api/store/products/all')
         .then(res => {
-            console.log(res)
-            
+            console.log("response: ", res);
+            setBookData(res.data);
+        });
+    }, []);
+
+    const GetBookData = () => {
+        axios.get('http://localhost:5000/api/store/products/all')
+        .then(res => {
+            console.log("response: ", res);
+            setBookData(res.data); 
         });
     }
 
-    const getUser = () =>{
-        console.log(props.currentUser.id)
-        const id = (props.currentUser.id) ? props.currentUser.id : props.currentUser._id;
-        const url = "http://localhost:5000/api/users/"+id;
-
-        axios.get(url).then(res => props.setCurrentUser(res.data));
-        console.log(props.currentUser);
-        console.log(localStorage.jwtToken)
-
+    function handleClick(e){
+        console.log("product ID: ", e.target.id);
+        console.log("store ID: ", e.target.name);
     }
+
+    function DisplayBooks() {
+
+        console.log("MADE IT IN!", bookData)
+
+        let filteredResults = bookData;
+
+        return bookData.map((data, index) => {
+            const { authors, binding, datePublished, dimensions, edition, image, inventory, isbn, isbn13, language, msrp, pages, price, publisher, storeId, subjects, synopsis, title, titleLong, _id } = data;
+            return(
+                <Col>
+                    <Card bg="dark" className="card_style" style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src={image}/>
+                        
+                        <Card.Body >
+                            <Card.Title className="image_style">{title}</Card.Title>
+                            <Card.Title>Authors: 
+                                {authors.map((data, index) => {
+                                    return(`${data}, `)
+                                }) 
+                                }
+                            </Card.Title>
+                            <Card.Text>
+                            Synopsis: {synopsis}
+                            </Card.Text>
+                            <Card.Text>
+                                Binding {binding}<br/><br/>
+                                isbn: {(isbn) ? isbn : isbn13}<br/>
+                                Language: {language}<br/>
+                                Page Count: {pages}<br/>
+                                Subjects: {subjects.map((data, index) => { return(`${data} `) } ) }<br/>
+                            </Card.Text>
+                            <Card.Text>
+                                Price: ${price}
+                            </Card.Text>
+                            {(inventory === 0 ) ? <Button>out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e)=> handleClick(e)}>Add to Cart</Button>}
+                        </Card.Body>
+                    </Card>
+                </Col>
+            )
+        })
+    }
+
+
+
 
     return(
         <Row>
@@ -34,24 +84,14 @@ function Books(props){
 
             <Col xs={6}>
                 <h1>Hello: {(props.currentUser === null) ? "Guest" : props.currentUser.firstName}</h1>
-                <Button onClick={getUser}> get user </Button>
-                <Button onClick={GetData}> get books </Button>
+
+
+                <Form>
+                    <Form.Control size="lg" placeholder="Search..." name="search" onChange={handleChange} value={values.search} />
+                </Form>
 
                 <Row>
-                    <Col>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src="https://upload.wikimedia.org/wikipedia/en/7/7e/Adventure_Time_Distant_Lands_Poster.jpg"/>
-                            <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
-                                <Card.Text>
-                                    Text about the book goes here!
-                                </Card.Text>
-                                <Button variant="info">Add to Cart</Button>
-                            </Card.Body>
-                        </Card>
-
-                    </Col>
-
+                    {(bookData === null ) ? <div>loading...</div> : DisplayBooks()}
                 </Row>
 
             </Col>

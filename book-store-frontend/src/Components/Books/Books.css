@@ -1,0 +1,11 @@
+.card_style {
+    background-color: #29343C;
+    color: #3FA4B8;
+    
+}
+
+.image_style{
+    max-width: 100%;
+    max-height: 100%;
+    display: block,
+}
