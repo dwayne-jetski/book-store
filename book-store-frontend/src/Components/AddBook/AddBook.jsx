@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Row, Col, Form, FormControl } from 'react-bootstrap';
 import axios from 'axios';
-import cors from 'cors';
+
 
 function AddBook(){
 

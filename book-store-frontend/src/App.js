@@ -16,7 +16,7 @@ import { render } from '@testing-library/react';
 
 function App() {
 
-  const [ currentUser, setCurrentUser ] = useState({});
+  const [ currentUser, setCurrentUser ] = useState(null);
   const history = useHistory();
 
   return(

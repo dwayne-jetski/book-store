@@ -14,14 +14,14 @@ function Login(props, component){
 
         e.preventDefault();
       
-        const url = 'http://localhost:5000/api/users/login'
+        const url = 'http://localhost:5000/api/users/'
 
         const loginCredentials = {
             email: values.email,
             password: values.password
         }
 
-        axios.post(url, loginCredentials)
+        axios.post(url+'login', loginCredentials)
         .then(res => {
             const { token } = res.data;
             localStorage.setItem('jwtToken', token);
@@ -29,7 +29,12 @@ function Login(props, component){
             setAuthToken(token);
 
             props.setCurrentUser(jwt_decode(token));
-            console.log("currentUser: ",props.currentUser)
+            axios.get(url+props.currentUser.id, )
+            .then(res=> {
+                console.log(res.data); 
+                props.setCurrentUser(res.data);
+                localStorage.setItem('user', res.data);
+            });
             
 
             props.history.push('/books');

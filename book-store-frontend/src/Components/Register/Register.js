@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
 import { Link, useLocation, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { userActions } from '../../_actions/user.actions'
 import useForm from '../UseForm/UseForm';
 import axios from 'axios';
 
