@@ -47,7 +47,7 @@ function EditBook(props){
             
                 <Form>
                     <h5>Authors: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="author" placeholder="Author" value={values.authors} required={true} />
+                    <Form.Control onChange={HandleChange} type="text" name="authors" placeholder="Author" value={values.authors} required={true} />
                     <h5>Binding: </h5>
                     <Form.Control onChange={HandleChange} type="text" name="binding" placeholder="Binding" value={values.binding} required={true} />
                     <h5>Date Published: </h5>

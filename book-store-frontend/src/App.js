@@ -9,6 +9,8 @@ import Register from './Components/Register/Register'
 import MyCart from './Components/MyCart/MyCart';
 import Footer from './Components/Footer/Footer';
 import RetailerMain from './Components/RetailerMain/RetailerMain';
+import RetailerLogin from './Components/RetailerLogin/RetailerLogin';
+
 
 import { Button } from 'react-bootstrap';
 import { render } from '@testing-library/react';
@@ -21,8 +23,8 @@ function App() {
 
   return(
     <div>
-      <MyNavBar setCurrentUser={setCurrentUser} currentUser={currentUser} />
       <Router history={history}>
+      <MyNavBar setCurrentUser={setCurrentUser} currentUser={currentUser} />
         <Switch>
           <PrivateRoute exact path="/"> 
             <Books setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
@@ -36,8 +38,14 @@ function App() {
           <Route path='/register'> 
             <Register setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} /> 
           </Route>
-          <Route path='/retailermain'> 
+          <Route path='/retailer/login'>
+            <RetailerLogin setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
+          </Route>
+          <Route path='/retailer/main'> 
             <RetailerMain setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
+          </Route>
+          <Route path='/mycart'>
+            <MyCart setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />
           </Route>
         </Switch>
       </Router>

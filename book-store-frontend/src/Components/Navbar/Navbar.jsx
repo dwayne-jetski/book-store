@@ -1,6 +1,7 @@
-import { Nav, Navbar, Col, Button } from 'react-bootstrap'
+import { Nav, Navbar, Col, Button, NavItem } from 'react-bootstrap'
 import UserLogin from '../UserLogin/UserLogin'
-import Link from "react-router-dom";
+import {Link} from "react-router-dom";
+import { LinkContainer } from 'react-router-bootstrap';
 import SearchBar from '../SearchBar/SearchBar'
 
 function MyNavBar(props) {
@@ -17,12 +18,31 @@ function MyNavBar(props) {
 
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="/books">Book Store!</Navbar.Brand>
-        <Col xs={4}>
+        <Col xs={5}>
           <Nav className="mr-auto">
-            <Nav.Link href="/login" >login</Nav.Link>
-            <Nav.Link href="/register">register</Nav.Link>
-            <Nav.Link href="/retailermain">Retailer</Nav.Link>
-            <Nav.Link href="/books">Books</Nav.Link>
+            <LinkContainer to="/books">
+              <NavItem eventKey={1}>Books</NavItem>
+            </LinkContainer>
+            <Col/>
+            <LinkContainer to="/login">
+              <NavItem eventKey={2}>login</NavItem>
+            </LinkContainer>
+            <Col/>
+            <LinkContainer to="/register">
+              <NavItem eventKey={3}>Register</NavItem>
+            </LinkContainer>
+            <Col/>
+            <LinkContainer to="/retailer/main">
+              <NavItem eventKey={4}>Retailer Main</NavItem>
+            </LinkContainer>
+            <Col/>
+            <LinkContainer to="/retailer/login">
+              <NavItem eventKey={5}>Retailer login</NavItem>
+            </LinkContainer>
+            <Col/>
+            <LinkContainer to="/mycart">
+              <NavItem eventKey={6}>My Cart</NavItem>
+            </LinkContainer>
           </Nav>
         </Col>
 
