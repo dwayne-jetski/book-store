@@ -50,13 +50,40 @@ function EditBook(props){
     const handleSubmit = (event) =>{
 
         event.preventDefault();
+        console.log(values);
 
+        const id = values._id
+        const url = "http://localhost:5000/api/store/products/update/" + id;
+        console.log(id);
+        console.log(url);
+
+        const updatedBook = {
+            authors: values.authors,
+            binding: values.binding,
+            datePublished: values.datePublished,
+            dimensions: values.dimenstions,
+            edition: values.edition,
+            image: values.image,
+            inventory: values.inventory,
+            isbn: values.isbn,
+            isbn13: values.isbn13,
+            language: values.language,
+            msrp: values.msrp,
+            pages: values.pages,
+            price: values.price,
+            publisher: values.publisher,
+            subjects: values.subjects,
+            synopsis: values.synopsis,
+            title: values.title,
+            titleLong: values.titleLong,
+
+        }
+
+        axios.put(url, updatedBook).then(res=>{
+            console.log(res.data)
+            setEditComplete(values.title + ' WAS EDITED');
+        });
         
-    }
-
-    const GetBookDetails = () => {
-
-      
     }
 
     const displayBook = () => {

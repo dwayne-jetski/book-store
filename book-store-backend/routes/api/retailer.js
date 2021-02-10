@@ -54,6 +54,7 @@ router.post(`/store/createstore`, (req, res) => {
     });
 });
 
+//login for store
 router.post(`/store/login`, (req, res) => {
     //form validation
 
@@ -112,8 +113,8 @@ router.post(`/store/login`, (req, res) => {
 });
 
 
+//get store info
 router.get(`/store/:id`, async (req, res) => {
-    //get store info
     try{
         const retailer = await Retailer.findById(req.params.id);
         if(!retailer){
@@ -156,8 +157,8 @@ router.put(`/store/uncompleteorder`), async (req, res) => {
 
 
 
+//edit store info
 router.put(`/store/update`, (req, res) => {
-    //edit store info
 
     Retailer.findByIdAndUpdate(
         req.params.id,
@@ -178,8 +179,8 @@ router.put(`/store/update`, (req, res) => {
 
 });
 
+//create a product
 router.post(`/store/newbook`, (req, res) => {
-    //create a product
 
     console.log(req.body);
    
@@ -224,8 +225,8 @@ router.post(`/store/newbook`, (req, res) => {
 
 });
 
+//get a list of ALL products
 router.get(`/store/products/all`, async (req, res) =>{
-    //get a list of ALL products
     try{
         const books = await Book.find();
         return res.send(books); 
@@ -235,8 +236,8 @@ router.get(`/store/products/all`, async (req, res) =>{
     }
 });
 
+//get a list of product by id
 router.get(`/store/products/:id`, async (req, res) => {
-    //get a list of product by id
 
     try{ 
 
@@ -254,6 +255,7 @@ router.get(`/store/products/:id`, async (req, res) => {
 
 });
 
+//delete book by id
 router.delete(`/store/products/delete/:id`, async (req, res) => {
     try{
      
@@ -268,6 +270,31 @@ router.delete(`/store/products/delete/:id`, async (req, res) => {
     } catch (ex) {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
+});
+
+router.put(`/store/products/update/:id`, async (req, res) =>{
+    try{
+
+        const id = req.params.id;
+        const updates = req.body;
+
+        const result = await Book.findByIdAndUpdate(id, updates, {new: true}, (err, doc) =>{
+
+
+
+        }).then(() => {
+            res.status(200).json({
+                message: `${updates.title} was updated in the database!`
+            });
+        });
+
+        res.send(result);
+
+
+    } catch (ex) {
+        console.log(ex);
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
 })
 
 
@@ -278,6 +305,6 @@ router.get(`store/products/subject`, (req, res) => {
 
     Book.find({'subjects': {$in: subject}}, )
 
-})
+});
 
 module.exports = router;
