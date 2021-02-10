@@ -3,7 +3,8 @@ import { Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AddBook from '../AddBook/AddBook';
 import Inventory from '../Inventory/inventory';
-import EditBook from '../EditBook/EditBook'
+import EditBook from '../EditBook/EditBook';
+import HeroImage from '../HeroImage/HeroImage';
 import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 
 
@@ -12,6 +13,7 @@ function RetailerMain(){
     const [ displayAddBook, setDisplayAddBook ] =  useState(false);
     const [ displayInventory, setDisplayInventory ] = useState(false);
     const [ displayEditBook, setDisplayEditBook ] = useState(false);
+    const [ displayHeroImage, setDisplayHeroImage ] = useState(false);
     const [ bookToEdit, setBookToEdit ] = useState();
     
 
@@ -26,7 +28,15 @@ function RetailerMain(){
         setDisplayAddBook(!displayAddBook);
         setDisplayInventory(false);
         setDisplayEditBook(false);
+        setDisplayHeroImage(false);
         console.log(displayAddBook)
+    }
+
+    function ToggleHeroImage() {
+        setDisplayHeroImage(!displayHeroImage);
+        setDisplayAddBook(false);
+        setDisplayInventory(false);
+        setDisplayEditBook(false);
     }
 
     function ToggleEditBook(e,data){
@@ -53,12 +63,15 @@ function RetailerMain(){
                     <Button onClick={ToggleInventory} >View Inventory</Button>
                     </Col>
                     <Col>
-                    <h1>See Your Sales Figures</h1>
-                    {/* See Sales Function */}
+                        <h1>See Your Sales Figures</h1>
+                        {/* See Sales Function */}
                     </Col>
                     <Col>
-                    <h1>See Book Requests</h1>
-                    {/* Function for Book Requests */}
+                        <h1>See Book Requests</h1>
+                        {/* Function for Book Requests */}
+                    </Col>
+                    <Col>
+                        <Button onClick={ToggleHeroImage}>Edit Hero Image</Button>
                     </Col>
                     <Col/>
                 </Row>
@@ -73,6 +86,7 @@ function RetailerMain(){
                         {!displayInventory ? <div/> : <Inventory 
                             ToggleEditBook={ToggleEditBook}
                         />}
+                        {!displayHeroImage ? <div/> : <HeroImage />}
                     </Col>
                     <Col> 
                         {!displayEditBook ? <div /> : <EditBook 

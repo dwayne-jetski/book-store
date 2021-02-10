@@ -25,7 +25,7 @@ router.post(`/store/heroimage/create`,  (req, res) => {
 //get a hero image by id
 router.get(`/store/heroimage/:id`, async (req, res) => {
     try{
-        
+
         const heroImage = await HeroImage.findById(req.params.id);
 
         if(!heroImage){
@@ -43,16 +43,18 @@ router.get(`/store/heroimage/:id`, async (req, res) => {
 });
 
 //update a hero image
-router.put(`/store/heroimage/update/:id`, (req, res) => {
+router.put(`/store/heroimage/update/:id`, async (req, res) => {
     try{
         const id = req.params.id;
         const updatedImage = req.body;
+        console.log("updatedImage: ",updatedImage);
 
-        result = HeroImage.findByIdAndUpdate(id, updatedImage)
+        const result = await HeroImage.findByIdAndUpdate(id, updatedImage, {new: true})
         .then(()=> {
             res.status(200).json({
                 message: 'HeroImage has been updated!'
             });
+            res.send();
         });
 
         res.send(result);

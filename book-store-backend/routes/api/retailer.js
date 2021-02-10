@@ -184,9 +184,6 @@ router.put(`/store/update`, (req, res) => {
 //create a product
 router.post(`/store/newbook`, (req, res) => {
 
-    console.log(req.body);
-   
-
     try {
         const { error } = validateBook(req.body);
         if (error){
