@@ -1,6 +1,4 @@
 import { Nav, Navbar, Col, Button, NavItem } from 'react-bootstrap'
-import UserLogin from '../UserLogin/UserLogin'
-import {Link} from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap';
 import SearchBar from '../SearchBar/SearchBar'
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import { Button, Col, Row, Form, FormControl, Card } from 'react-bootstrap';
+import { Button, Col, Row, Form, Card } from 'react-bootstrap';
 import useForm from '../UseForm/UseForm';
 import './Books.css'
 
@@ -17,14 +17,6 @@ function Books(props){
             setBookData(res.data);
         });
     }, []);
-
-    const GetBookData = () => {
-        axios.get('http://localhost:5000/api/store/products/all')
-        .then(res => {
-            console.log("response: ", res);
-            setBookData(res.data); 
-        });
-    }
 
     function handleClick(e){
         console.log("product ID: ", e.target.id);

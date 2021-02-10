@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Form, FormControl, Button, Col, Row } from 'react-bootstrap';
-import { Link, useLocation, Redirect, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode'
 import setAuthToken from '../../utils/setAuthToken';
 import useForm from '../UseForm/UseForm';
@@ -8,7 +8,7 @@ import useForm from '../UseForm/UseForm';
 import axios from 'axios';
 
 function Login(props){
-    const { values, handleChange, handleSubmit } = useForm()
+    const { values, handleChange } = useForm()
 
    const UserLogin = (e) => {
 
