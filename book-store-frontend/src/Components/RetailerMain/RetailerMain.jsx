@@ -36,7 +36,7 @@ function RetailerMain(){
 
     return(
         <React.Fragment>
-            
+            <Row/><Row/>
             
             <Col>
                 
