@@ -8,6 +8,7 @@ function Books(props){
 
     const [ bookData, setBookData ] = useState(null);
     const { values, handleSubmit, handleChange } = useForm();
+    const [ heroImage, setHeroImage ] = useState(false);
 
 
     useEffect(() => {
@@ -16,6 +17,12 @@ function Books(props){
             console.log("response: ", res);
             setBookData(res.data);
         });
+
+        axios.get('http://localhost:5000/api/store/heroimage/6023583e65778950a0e595d0').then(res=>{
+            console.log("response: ", res);
+            setHeroImage(res.data.image);
+        });
+
     }, []);
 
     function handleClick(e){
@@ -24,8 +31,6 @@ function Books(props){
     }
 
     function DisplayBooks() {
-
-        console.log("MADE IT IN!", bookData)
 
         let filteredResults = bookData;
 
@@ -70,6 +75,11 @@ function Books(props){
             </Col>
 
             <Col xs={8}>
+
+                <Row>
+                    {heroImage ? <img src={heroImage} className="image_style"/> : <div>loading...</div>} 
+                </Row>
+
                 <h1>Hello: {(props.currentUser === null) ? "Guest" : props.currentUser.firstName + ' ' + props.currentUser.lastName}</h1>
 
 

@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const users = require('./routes/api/users');
 const retailer = require('./routes/api/retailer'); 
+const heroImage = require('./routes/api/heroImage');
 const app = express();
 
 
@@ -30,6 +31,7 @@ require('./config/passport')(passport);
 
 //routes
 app.use('/api', retailer);
+app.use('/api', heroImage);
 app.use('/api', users);
 
 const port = process.env.PORT || 5000; 

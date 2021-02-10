@@ -12,7 +12,7 @@ const validateLoginInput = require("../../validation/login");
 
 const Retailer = require('../../models/Retailer');
 const Book = require('../../models/Book');
-const storeUserSchema = require('../../models/Retailer');
+const HeroImage = require('../../models/heroImage');
 const { userInfo } = require('os');
 
 
@@ -111,6 +111,8 @@ router.post(`/store/login`, (req, res) => {
         });
     });
 });
+
+
 
 
 //get store info
@@ -278,11 +280,8 @@ router.put(`/store/products/update/:id`, async (req, res) =>{
         const id = req.params.id;
         const updates = req.body;
 
-        const result = await Book.findByIdAndUpdate(id, updates, {new: true}, (err, doc) =>{
-
-
-
-        }).then(() => {
+        const result = await Book.findByIdAndUpdate(id, updates, {new: true})
+        .then(() => {
             res.status(200).json({
                 message: `${updates.title} was updated in the database!`
             });
@@ -295,8 +294,7 @@ router.put(`/store/products/update/:id`, async (req, res) =>{
         console.log(ex);
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
-})
-
+});
 
 //may just take care of this on the front end by filtering the array
 router.get(`store/products/subject`, (req, res) => {
