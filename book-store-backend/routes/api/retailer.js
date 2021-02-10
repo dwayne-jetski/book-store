@@ -254,6 +254,22 @@ router.get(`/store/products/:id`, async (req, res) => {
 
 });
 
+router.delete(`/store/products/delete/:id`, async (req, res) => {
+    try{
+     
+        Book.deleteOne({_id: req.params.id}).then(
+            () => {
+                res.status(200).json({
+                    message: 'Deleted!'
+                });
+            }
+        )
+
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+})
+
 
 //may just take care of this on the front end by filtering the array
 router.get(`store/products/subject`, (req, res) => {

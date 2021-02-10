@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import AddBook from '../AddBook/AddBook';
 import Inventory from '../Inventory/inventory';
 import EditBook from '../EditBook/EditBook'
+import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 
 
 function RetailerMain(){
@@ -11,6 +13,7 @@ function RetailerMain(){
     const [ displayInventory, setDisplayInventory ] = useState(false);
     const [ displayEditBook, setDisplayEditBook ] = useState(false);
     const [ bookToEdit, setBookToEdit ] = useState();
+    
 
 
     function ToggleInventory(){
@@ -44,6 +47,7 @@ function RetailerMain(){
                     <Col/>
                     <Col>
                     <Button onClick={ToggleAddBook} >Add Book</Button>
+                    <Link to="retailer/addbook"></Link>
                     </Col>
                     <Col>
                     <Button onClick={ToggleInventory} >View Inventory</Button>
@@ -59,6 +63,8 @@ function RetailerMain(){
                     <Col/>
                 </Row>
                 
+                
+
 
                 <Row>
                     <Col/>
@@ -70,7 +76,7 @@ function RetailerMain(){
                     </Col>
                     <Col> 
                         {!displayEditBook ? <div /> : <EditBook 
-                        
+                        setDisplayEditBook={setDisplayEditBook}
                         bookToEdit={bookToEdit}
                         setBookToEdit={setBookToEdit}
 
