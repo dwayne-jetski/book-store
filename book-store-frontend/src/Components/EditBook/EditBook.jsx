@@ -8,7 +8,7 @@ function EditBook(props){
 
     const [ newBook, setNewBook ] = useState(null);
 
-    const [ editComplete, setEditComplete ] = useState(false);
+    
     
     
 
@@ -20,7 +20,7 @@ function EditBook(props){
         axios.get(url).then(res=> {
             console.log(res.data);
             setValues(res.data);
-            setEditComplete(false);
+            props.setEditComplete(false);
         })
     }, [])
 
@@ -42,7 +42,7 @@ function EditBook(props){
         
         axios.delete(url).then(res=>{
             console.log(res.data)
-            setEditComplete(values.title + ' WAS DELETED FROM INVENTORY');
+            props.setEditComplete(values.title + ' WAS DELETED FROM INVENTORY');
         });
        
     }
@@ -81,7 +81,7 @@ function EditBook(props){
 
         axios.put(url, updatedBook).then(res=>{
             console.log(res.data)
-            setEditComplete(values.title + ' WAS EDITED');
+            props.setEditComplete(values.title + ' WAS EDITED');
         });
         
     }
@@ -90,7 +90,7 @@ function EditBook(props){
         return(
             <React.Fragment>
                 <Row>
-                    {(!editComplete) ? <h3>Now Editing: {values.title}</h3>: <h3>{editComplete}</h3>}
+                    {(!props.editComplete) ? <h3>Now Editing: {values.title}</h3>: <h3>{props.editComplete}</h3>}
                 </Row>
                 <Form onSubmit={handleSubmit}>
                         <h5>Authors: </h5>
@@ -140,7 +140,7 @@ function EditBook(props){
 
         <React.Fragment>
             
-            {(editComplete) ? <h3>{editComplete}</h3> : displayBook() }
+            {(props.editComplete) ? <h3>{props.editComplete}</h3> : displayBook() }
             
                 
           

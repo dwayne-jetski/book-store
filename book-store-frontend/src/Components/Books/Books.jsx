@@ -9,17 +9,16 @@ function Books(props){
     const [ bookData, setBookData ] = useState(null);
     const { values, handleSubmit, handleChange } = useForm();
     const [ heroImage, setHeroImage ] = useState(false);
+    const [ addBook, setAddBook ] = useState(null);
 
 
     useEffect(() => {
         axios.get('http://localhost:5000/api/store/products/all')
         .then(res => {
-            console.log("response: ", res);
             setBookData(res.data);
         });
 
         axios.get('http://localhost:5000/api/store/heroimage/6023583e65778950a0e595d0').then(res=>{
-            console.log("response: ", res);
             setHeroImage(res.data.image);
         });
 
@@ -28,6 +27,37 @@ function Books(props){
     function handleClick(e){
         console.log("product ID: ", e.target.id);
         console.log("store ID: ", e.target.name);
+
+        const bookId = e.target.id;
+        const storeId = e.target.name;
+        const userId = props.currentUser._id;
+        const url = 'http://localhost:5000/api/store/products/'+bookId
+        console.log(url)
+        console.log(userId);
+
+
+        axios.get(url)
+        .then(res => {
+            setAddBook(res.data);
+
+            console.log(addBook);   
+
+        });
+
+        if(addBook !== null){
+            console.log("made it in!")
+            axios.put('http://localhost:5000/api/users/cart/addBook/'+userId, addBook)
+            .then(res=> console.log(res));
+        }
+ 
+
+        //get the book via axios.get('http://localhost:5000/api/store/products/'+bookid).then(res=> )
+
+        //add the book into the user's cart via an axios.put searching for user by id 
+            //this needs to be created on the backend
+
+        //an axios.put request that decrements the store's inventory for a book. axios.put('http://localhost:5000/api/store/products/decrement/:id, )
+            //this needs to be created on the backend
     }
 
     function DisplayBooks() {
@@ -57,7 +87,7 @@ function Books(props){
                             <Card.Text>
                                 Price: ${price}
                             </Card.Text>
-                            {(inventory === 0 ) ? <Button>out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e)=> handleClick(e)}>Add to Cart</Button>}
+                            {(inventory === 0 ) ? <Button>out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e )=> handleClick(e)}>Add to Cart</Button>}
                         </Card.Body>
                     </Card>
                 </Col>

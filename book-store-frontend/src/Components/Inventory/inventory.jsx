@@ -8,6 +8,7 @@ function Inventory(props) {
     const [ bookData, setBookData ] = useState(null);
     const [ filteredResults, setFilteredResults ] = useState(null);
     const [ loading, setLoading ] = useState(true)
+    
 
     useEffect(() => { 
     
@@ -18,7 +19,7 @@ function Inventory(props) {
                 setLoading(false);
         });
 
-    }, [])
+    }, [props.editComplete])
 
 
     const buildTable = () => {

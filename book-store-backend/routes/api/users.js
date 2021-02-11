@@ -131,4 +131,33 @@ router.get(`/users/:id`, async (req, res) => {
 
 });
 
+router.put(`/users/cart/addbook/:id`, async (req, res) =>{
+    try{
+
+        const id = req.params.id;
+        const updates = {
+            $push: {
+                cart: req.body
+            }
+        };
+
+        console.log(updates);
+
+        const result = await User.findByIdAndUpdate(id, updates, {new: true})
+        .then(() => {
+            res.status(200).json({
+                message: `${updates.title} was added to your cart!`
+            });
+        });
+
+        res.send(result);
+
+
+    } catch (ex) {
+        console.log(ex);
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
+
 module.exports = router;

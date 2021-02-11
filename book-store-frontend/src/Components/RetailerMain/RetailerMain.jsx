@@ -15,6 +15,7 @@ function RetailerMain(){
     const [ displayEditBook, setDisplayEditBook ] = useState(false);
     const [ displayHeroImage, setDisplayHeroImage ] = useState(false);
     const [ bookToEdit, setBookToEdit ] = useState();
+    const [ editComplete, setEditComplete ] = useState(false);
     
 
 
@@ -85,6 +86,8 @@ function RetailerMain(){
                         {!displayAddBook ? <div/> : <AddBook />}
                         {!displayInventory ? <div/> : <Inventory 
                             ToggleEditBook={ToggleEditBook}
+                            editComplete = {editComplete}
+                            setEditComplete = {setEditComplete}
                         />}
                         {!displayHeroImage ? <div/> : <HeroImage />}
                     </Col>
@@ -93,6 +96,8 @@ function RetailerMain(){
                         setDisplayEditBook={setDisplayEditBook}
                         bookToEdit={bookToEdit}
                         setBookToEdit={setBookToEdit}
+                        editComplete = {editComplete}
+                        setEditComplete = {setEditComplete}
 
                         />}
                     </Col>
