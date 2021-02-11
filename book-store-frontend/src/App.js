@@ -12,10 +12,6 @@ import RetailerMain from './Components/RetailerMain/RetailerMain';
 import RetailerLogin from './Components/RetailerLogin/RetailerLogin';
 
 
-import { Button } from 'react-bootstrap';
-import { render } from '@testing-library/react';
-
-
 function App() {
 
   const [ currentUser, setCurrentUser ] = useState(null);

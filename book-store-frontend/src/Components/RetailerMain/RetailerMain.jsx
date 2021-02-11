@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import AddBook from '../AddBook/AddBook';
 import Inventory from '../Inventory/inventory';
 import EditBook from '../EditBook/EditBook';
 import HeroImage from '../HeroImage/HeroImage';
-import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 
 
-function RetailerMain(){
+
+
+function RetailerMain(props){
+
+    function validate(){
+        if(props.currentUser === null){
+            props.history.push('/books')
+        }
+    }
+
+    useEffect(()=>{
+        validate();
+    }, []);
 
     const [ displayAddBook, setDisplayAddBook ] =  useState(false);
     const [ displayInventory, setDisplayInventory ] = useState(false);
@@ -108,4 +119,4 @@ function RetailerMain(){
     )
 }
 
-export default RetailerMain;
+export default withRouter(RetailerMain);

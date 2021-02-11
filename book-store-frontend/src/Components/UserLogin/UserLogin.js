@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, FormControl, Button, Col, Row } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import jwt_decode from 'jwt-decode'
@@ -9,6 +9,12 @@ import axios from 'axios';
 
 function Login(props){
     const { values, handleChange } = useForm()
+
+    useEffect(()=>{
+        if(props.currentUser !== null){
+            props.history.push('/books');
+        }
+    }, [])
 
    const UserLogin = (e) => {
 
