@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Row, Form } from 'react-bootstrap';
 import axios from 'axios';
 
 
 function AddBook(){
 
-
     const [ values, setValues ] = useState({});
-
     const [ newBook, setNewBook ] = useState(null);
-
     const [ bookSubmission, setBookSubmission ] = useState(null);
+    const [ bookAddedSuccessfuly, setBookAddedSuccessfully ] = useState(false);
+    const [ reloadForm, setReloadForm ] = useState(false);
+
+    useEffect(()=>{
+       setBookAddedSuccessfully(false); 
+       setBookSubmission(false);
+    },[reloadForm]);
 
     const HandleChange = (event) =>{
 
@@ -54,15 +58,18 @@ function AddBook(){
 
         console.log("newBook: ", bookSubmission);
 
-        axios.post(url, bookSubmission).then(res =>{
-                console.log(res.data)
-                
+        if(bookSubmission){
+
+            axios.post(url, bookSubmission).then(res =>{
+                    console.log(res.data)
+                    
             })
-            
+            setBookAddedSuccessfully(true);
+        }
         
     }
 
-    const GetBookDetails = () => {
+    async function GetBookDetails() {
 
         const headers = {
             "Content-Type": 'application/json',
@@ -91,8 +98,8 @@ function AddBook(){
                 title: newBook.title,
                 titleLong: newBook.title_long,
                 subjects: newBook.subjects
-    
             })
+            
             console.log("newBook: ", newBook);
         })
         .catch(err => {
@@ -100,7 +107,66 @@ function AddBook(){
         })
     }
 
+    function addBookField(){
 
+        return(
+            <Form onSubmit={handleSubmit}>
+            <Form.Control onChange={HandleChange} type="text" name="isbn" placeholder="ISBN" value={values.isbn} /> 
+            <Button onClick={()=> GetBookDetails()}>GET DETAILS?</Button>
+            <br/><br/>
+            <h5>Author: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="authors" placeholder="Author, separate by commas" value={values.authors} />
+            <h5>Binding: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="binding" placeholder="Binding" value={values.binding} />
+            <h5>Date Published: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="datePublished" placeholder="Date Published" value={values.datePublished} />
+            <h5>Dimensions: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="dimensions" placeholder="Dimensions" value={values.dimensions} />
+            <h5>Edition: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="edition" placeholder="Edition" value={values.edition} />
+            <h5>Image Link: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="image" placeholder="Image Source" value={values.image} required={true} />
+            <h5>ISBN13: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="isbn13" placeholder="ISBN 13" value={values.isbn13} />
+            <h5>Language: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="language" placeholder="Language" value={values.language} />
+            <h5>MSRP: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="msrp" placeholder="MSRP" value={values.msrp} />
+            <h5>Pages: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="pages" placeholder="Pages" value={values.pages} />
+            <h5>Publisher: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="publisher" placeholder="Publisher" value={values.publisher} />
+            <h5>Title: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="title" placeholder="Title" value={values.title} required={true} />
+            <h5>Title Long: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="titleLong" placeholder="Title Long" value={values.titleLong} />
+            <h5>Subjects/Genres: </h5>
+            <Form.Control onChange={HandleChange} type="text" name="subjects" placeholder="Subjects" value={values.subjects} required={true} />                    
+            <h5>Synopsis</h5>
+            <Form.Control onChange={HandleChange} type="text" name="synopsis" placeholder="Synopsis" value={values.synopsis} />
+            <h5>Price</h5>
+            <Form.Control onChange={HandleChange} type="text" name="price" placeholder="Price" value={values.price} required={true} />
+            <h5>Starting Inventory</h5>
+            <Form.Control onChange={HandleChange} type="text" name="inventory" placeholder="Your Inventory" value={values.inventory} required={true} />
+            <Button type="submit" variant="info">Submit</Button>
+        </Form>
+        )
+    }
+
+    function rerenderAddBookForm(){
+        setReloadForm(!reloadForm);
+    }
+
+    function displaySuccess(){
+
+        return(
+            <div>
+                <br/><br/><br/>
+                <h3>{values.title} was added successfully!</h3>
+                <Button variant="info" onClick={rerenderAddBookForm}>Click to add another book</Button>
+            </div>
+        )
+    }
 
     return(
 
@@ -109,46 +175,8 @@ function AddBook(){
                 <h3>Here you can add a book. Enter the ISBN and hit "Get Details?" to autopopulate based off the ISBN or ISBN13</h3>
             </Row>
             
-                <Form onSubmit={handleSubmit}>
-                    <Form.Control onChange={HandleChange} type="text" name="isbn" placeholder="ISBN" value={values.isbn} /> 
-                    <Button onClick={()=> GetBookDetails()}>GET DETAILS?</Button>
-                    <br/><br/>
-                    <h5>Author: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="authors" placeholder="Author, separate by commas" value={values.authors} />
-                    <h5>Binding: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="binding" placeholder="Binding" value={values.binding} />
-                    <h5>Date Published: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="datePublished" placeholder="Date Published" value={values.datePublished} />
-                    <h5>Dimensions: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="dimensions" placeholder="Dimensions" value={values.dimensions} />
-                    <h5>Edition: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="edition" placeholder="Edition" value={values.edition} />
-                    <h5>Image Link: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="image" placeholder="Image Source" value={values.image} required={true} />
-                    <h5>ISBN13: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="isbn13" placeholder="ISBN 13" value={values.isbn13} />
-                    <h5>Language: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="language" placeholder="Language" value={values.language} />
-                    <h5>MSRP: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="msrp" placeholder="MSRP" value={values.msrp} />
-                    <h5>Pages: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="pages" placeholder="Pages" value={values.pages} />
-                    <h5>Publisher: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="publisher" placeholder="Publisher" value={values.publisher} />
-                    <h5>Title: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="title" placeholder="Title" value={values.title} required={true} />
-                    <h5>Title Long: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="titleLong" placeholder="Title Long" value={values.titleLong} />
-                    <h5>Subjects/Genres: </h5>
-                    <Form.Control onChange={HandleChange} type="text" name="subjects" placeholder="Subjects" value={values.subjects} required={true} />                    
-                    <h5>Synopsis</h5>
-                    <Form.Control onChange={HandleChange} type="text" name="synopsis" placeholder="Synopsis" value={values.synopsis} />
-                    <h5>Price</h5>
-                    <Form.Control onChange={HandleChange} type="text" name="price" placeholder="Price" value={values.price} required={true} />
-                    <h5>Starting Inventory</h5>
-                    <Form.Control onChange={HandleChange} type="text" name="inventory" placeholder="Your Inventory" value={values.inventory} required={true} />
-                    <Button type="submit" variant="info">Submit</Button>
-                </Form>
+            {(bookAddedSuccessfuly) ? displaySuccess() : addBookField()}
+               
           
         </React.Fragment>
     )
