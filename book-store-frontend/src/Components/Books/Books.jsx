@@ -22,9 +22,7 @@ function Books(props){
             setHeroImage(res.data.image);
         });
 
-        setItemAddedToCart(false);
-
-    }, []);
+    }, [itemAddedToCart]);
 
     
 
@@ -55,7 +53,7 @@ function Books(props){
         axios.put('http://localhost:5000/api/store/products/decrement/'+bookId)
         .then(res=> console.log(res));
  
-        setItemAddedToCart(true)
+        setItemAddedToCart(!itemAddedToCart);
     }
 
     function DisplayBooks() {
@@ -85,7 +83,7 @@ function Books(props){
                             <Card.Text>
                                 Price: ${price}
                             </Card.Text>
-                            {(inventory === 0 ) ? <Button>out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e )=> handleClick(e)}>Add to Cart</Button>}
+                            {(inventory < 1 ) ? <Button>out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e )=> handleClick(e)}>Add to Cart</Button>}
                         </Card.Body>
                     </Card>
                 </Col>
