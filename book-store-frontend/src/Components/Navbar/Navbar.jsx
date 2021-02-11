@@ -39,9 +39,6 @@ function MyNavBar(props) {
               <NavItem eventKey={1}>Books</NavItem>
             </LinkContainer>
             <Col/>
-            {(props.currentUser === null) ? loginAndRegisterLinks() : null }
-            <Col/>
-
             <LinkContainer to="/retailer/login">
               <NavItem eventKey={5}>Retailer login</NavItem>
             </LinkContainer>
@@ -49,6 +46,8 @@ function MyNavBar(props) {
             <LinkContainer to="/mycart">
               <NavItem eventKey={6}>My Cart</NavItem>
             </LinkContainer>
+            <Col/>
+            {(props.currentUser === null) ? loginAndRegisterLinks() : null }
           </Nav>
         </Col>
 

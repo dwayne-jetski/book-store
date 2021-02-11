@@ -11,7 +11,9 @@ function RetailerLogin(props){
     const { values, handleChange } = useForm()
 
     useEffect(()=>{
-       
+       if(props.currentUser !== null){
+           props.history.push('/retailer/main')
+       }
     }, [])
 
    const UserLogin = (e) => {
@@ -41,14 +43,14 @@ function RetailerLogin(props){
                 localStorage.setItem('user', res.data);
             });
             
-
+            
         })
         .catch(err => {
             console.log(err);
         });
-
-        props.history.push('/retailer/main');
-        
+        setTimeout(()=>{
+            props.history.push('/retailer/main')
+        }, 1000);
     }
 
 

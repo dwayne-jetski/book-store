@@ -152,7 +152,7 @@ function MyCart(props){
             <Row/>
             <Row>
                 <Col xs={4}/>
-                    {(props.currentUser === null) ? <h1>Guest's Cart:</h1> :<h1>{ props.currentUser.firstname } { props.currentUser.lastName } 's Cart:</h1>}
+                    {(props.currentUser === null) ? <h1>Guest's Cart:</h1> :<h1> {props.currentUser.firstName + " " + props.currentUser.lastName }'s Cart:</h1>}
             </Row>
             <Row>
                 <Col xs={1}/>

@@ -19,7 +19,7 @@ function RetailerMain(props){
 
     useEffect(()=>{
         validate();
-    }, []);
+    }, [props.currentUser]);
 
     const [ displayAddBook, setDisplayAddBook ] =  useState(false);
     const [ displayInventory, setDisplayInventory ] = useState(false);
