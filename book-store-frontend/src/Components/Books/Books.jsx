@@ -9,7 +9,6 @@ function Books(props){
     const [ bookData, setBookData ] = useState(null);
     const { values, handleSubmit, handleChange } = useForm();
     const [ heroImage, setHeroImage ] = useState(false);
-    const [ addBook, setAddBook ] = useState(null);
 
 
     useEffect(() => {
@@ -40,11 +39,19 @@ function Books(props){
 
 
         async function getBookData(){
-            const response = await Promise
+            await axios.get(url)
+            .then(res => {
+                console.log(res.data);
+                const addBook = res.data
+                axios.put('http://localhost:5000/api/users/cart/addBook/'+userId, addBook)
+                .then(res=> console.log(res));
+            });
+            
+
         }
+
+        getBookData();
     
-        axios.put('http://localhost:5000/api/users/cart/addBook/'+userId, addBook)
-        .then(res=> console.log(res));
  
 
         //get the book via axios.get('http://localhost:5000/api/store/products/'+bookid).then(res=> )
