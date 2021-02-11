@@ -14,6 +14,7 @@ const Retailer = require('../../models/Retailer');
 const Book = require('../../models/Book');
 const HeroImage = require('../../models/heroImage');
 const { userInfo } = require('os');
+const { reset } = require('nodemon');
 
 
 //@route POST api/store/createstore
@@ -133,15 +134,16 @@ router.get(`/store/:id`, async (req, res) => {
 router.post(`/store/neworder`, async (req, res) => {
     //here is where the function to add a new order to the orders array will go.
 
-    Retailer.findByIdAndUpdate({
-        _id: req.body.storeId 
-    }, { 
-        $push: {
+    const id = req.body.storeId
 
+    Retailer.findByIdAndUpdate(id, 
+        { 
+            $push: {
 
+                
 
-          }
-    }, (err) => {
+            }
+        }, (err) => {
 
     })
 
@@ -254,22 +256,77 @@ router.get(`/store/products/:id`, async (req, res) => {
 
 });
 
+
+
 //delete book by id
 router.delete(`/store/products/delete/:id`, async (req, res) => {
     try{
-     
+        
         Book.deleteOne({_id: req.params.id}).then(
             () => {
                 res.status(200).json({
                     message: 'Deleted!'
                 });
             }
-        )
+            )
+            
+        } catch (ex) {
+            return res.status(500).send(`Internal Server Error: ${ex}`);
+        }
+});
+    
+router.put(`/store/products/increment/:id`, async (req, res) => {
+
+    try {
+        const id = req.params.id
+        const increment = {
+            $inc: {
+                inventory: +1
+            }
+        }
+
+        const result = await Book.findByIdAndUpdate(id, increment, { new: true })
+        .then(() => {
+            res.status(200).json({
+                message: 'Book inventory was increased by one'
+            });
+        });
+
+        res.send(result);
 
     } catch (ex) {
+        console.log(ex);
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
+
 });
+
+router.put(`/store/products/decrement/:id`, async (req, res) => {
+
+    try {
+        const id = req.params.id
+        const increment = {
+            $inc: {
+                inventory: -1
+            }
+        }
+
+        const result = await Book.findByIdAndUpdate(id, increment, { new: true })
+        .then(() => {
+            res.status(200).json({
+                message: 'Book inventory was increased by one'
+            });
+        });
+
+        res.send(result);
+
+    } catch (ex) {
+        console.log(ex);
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+
+});
+
 
 router.put(`/store/products/update/:id`, async (req, res) =>{
     try{

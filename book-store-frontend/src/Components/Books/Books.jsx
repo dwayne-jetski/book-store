@@ -30,7 +30,6 @@ function Books(props){
         console.log("store ID: ", e.target.name);
 
         const bookId = e.target.id;
-        const storeId = e.target.name;
         const userId = props.currentUser._id;
         const url = 'http://localhost:5000/api/store/products/'+bookId
         console.log(url)
@@ -46,12 +45,12 @@ function Books(props){
                 axios.put('http://localhost:5000/api/users/cart/addBook/'+userId, addBook)
                 .then(res=> console.log(res));
             });
-            
-
         }
 
         getBookData();
     
+        axios.put('http://localhost:5000/api/store/products/decrement/'+bookId)
+        .then(res=> console.log(res));
  
 
         //get the book via axios.get('http://localhost:5000/api/store/products/'+bookid).then(res=> )
