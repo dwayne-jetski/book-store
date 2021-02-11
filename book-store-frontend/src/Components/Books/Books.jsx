@@ -9,6 +9,7 @@ function Books(props){
     const [ bookData, setBookData ] = useState(null);
     const { values, handleSubmit, handleChange } = useForm();
     const [ heroImage, setHeroImage ] = useState(false);
+    const [ itemAddedToCart, setItemAddedToCart ] = useState(false);
 
 
     useEffect(() => {
@@ -20,6 +21,8 @@ function Books(props){
         axios.get('http://localhost:5000/api/store/heroimage/6023583e65778950a0e595d0').then(res=>{
             setHeroImage(res.data.image);
         });
+
+        setItemAddedToCart(false);
 
     }, []);
 
@@ -52,14 +55,7 @@ function Books(props){
         axios.put('http://localhost:5000/api/store/products/decrement/'+bookId)
         .then(res=> console.log(res));
  
-
-        //get the book via axios.get('http://localhost:5000/api/store/products/'+bookid).then(res=> )
-
-        //add the book into the user's cart via an axios.put searching for user by id 
-            //this needs to be created on the backend
-
-        //an axios.put request that decrements the store's inventory for a book. axios.put('http://localhost:5000/api/store/products/decrement/:id, )
-            //this needs to be created on the backend
+        setItemAddedToCart(true)
     }
 
     function DisplayBooks() {

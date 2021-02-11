@@ -131,6 +131,29 @@ router.get(`/users/:id`, async (req, res) => {
 
 });
 
+router.put(`/users/orders/addorder/:id`, async (req, res) => {
+    try{
+
+        const id = req.params.id
+        const updates = {
+            $push: {
+                orders: req.body
+            }
+        }
+
+        const result = await User.findByIdAndUpdate(id, updates, {new: true})
+        .then(()=> {
+            res.status(200).json({
+                message: `Order Placed`
+            });
+        });
+
+    } catch (ex) {
+        console.log(ex)
+        return res.status(500).send(`Internal Server Error: ${ex}`)
+    }
+})
+
 router.put(`/users/cart/addbook/:id`, async (req, res) =>{
     try{
 

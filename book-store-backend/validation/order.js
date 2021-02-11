@@ -7,6 +7,7 @@ module.exports = function validateBook(data) {
 
         books: Joi.array().required(),
         total: Joi.number().required(), 
+        address: Joi.array().required(),
 
     });
 

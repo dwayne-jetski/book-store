@@ -5,7 +5,9 @@ const Book = require('./Book');
 const OrderSchema = new Schema({
     books: { type: [Book], required: true },
     total: { type: Number, required: true },
+    address: { type: Array },
     date: {type: Date, default: Date.now },
+    contact: { type: Array }
 
 });
 

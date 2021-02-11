@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { Row, Form, Col, FormControl, Button } from 'react-bootstrap';
 
 function MyCart(props){
 
@@ -17,12 +18,22 @@ function MyCart(props){
                 setUserCart(res.data.cart);
             });
         }
-    });
+    }, []);
 
 
 
     return(
-        <h1>MY CART!</h1>
+        <React.Fragment>
+            <Row/>
+            <Row/>
+            <Col xs={3}/>
+            <Col xs={6}>
+
+
+
+            </Col>
+            <Col xs={3}/>
+        </React.Fragment>
     )
 }
 
