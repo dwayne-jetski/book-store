@@ -28,9 +28,9 @@ function Login(props){
 
             setAuthToken(token);
 
-            props.setCurrentUser(jwt_decode(token));
+            const currnetUserToken = jwt_decode(token);
 
-            axios.get(url+props.currentUser.id, )
+            axios.get(url+currnetUserToken.id, )
             .then(res=> {
                 console.log(res.data); 
                 props.setCurrentUser(res.data);

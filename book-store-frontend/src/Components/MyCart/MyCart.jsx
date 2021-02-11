@@ -9,7 +9,7 @@ function MyCart(props){
 
 
     useEffect(() => {
-        if(props.currentUser){
+        if(props.currentUser !== null){
             
             const id = props.currentUser.id;
 
