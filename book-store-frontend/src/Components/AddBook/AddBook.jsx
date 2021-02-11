@@ -6,14 +6,11 @@ import axios from 'axios';
 function AddBook(){
 
     const [ values, setValues ] = useState({});
-    const [ newBook, setNewBook ] = useState(null);
-    const [ bookSubmission, setBookSubmission ] = useState(null);
     const [ bookAddedSuccessfuly, setBookAddedSuccessfully ] = useState(false);
     const [ reloadForm, setReloadForm ] = useState(false);
 
     useEffect(()=>{
        setBookAddedSuccessfully(false); 
-       setBookSubmission(false);
     },[reloadForm]);
 
     const HandleChange = (event) =>{
@@ -30,9 +27,7 @@ function AddBook(){
 
         const url = "http://localhost:5000/api/store/newbook"
 
-       
-
-        setBookSubmission({
+        const bookSubmission = {
                 isbn: values.isbn, 
                 authors: values.authors,
                 binding: values.binding,
@@ -54,7 +49,7 @@ function AddBook(){
                 inventory: parseFloat(values.inventory),
                 price: values.price,
 
-        })
+        }
 
         console.log("newBook: ", bookSubmission);
 
@@ -65,6 +60,7 @@ function AddBook(){
                     
             })
             setBookAddedSuccessfully(true);
+
         }
         
     }
@@ -76,31 +72,35 @@ function AddBook(){
             "Authorization": '45189_e1956007298eb5f4d7533e1d701ed6cb'
         }
 
-        axios.get(`https://api2.isbndb.com/book/${values.isbn}`, {headers: headers})
+        await axios.get(`https://api2.isbndb.com/book/${values.isbn}`, {headers: headers})
         .then( res => {
             console.log(res.data);
-            setNewBook(res.data.book);
-
-            setValues({
-                isbn: newBook.isbn, 
-                authors: newBook.authors[0],
-                binding: newBook.binding,
-                datePublished: newBook.date_published,
-                dimensions: newBook.dimensions,
-                edition: newBook.edition,
-                image: newBook.image,
-                isbn13: newBook.isbn13,
-                language: newBook.language,
-                msrp: newBook.msrp,
-                pages: newBook.pages,
-                datePublished: newBook.publish_date,
-                publisher: newBook.publisher,
-                title: newBook.title,
-                titleLong: newBook.title_long,
-                subjects: newBook.subjects
-            })
             
-            console.log("newBook: ", newBook);
+            if(res.data){
+                
+                const newBook = res.data.book
+
+
+                console.log("newBook: ", newBook);
+                setValues({
+                    isbn: newBook.isbn, 
+                    authors: newBook.authors[0],
+                    binding: newBook.binding,
+                    datePublished: newBook.date_published,
+                    dimensions: newBook.dimensions,
+                    edition: newBook.edition,
+                    image: newBook.image,
+                    isbn13: newBook.isbn13,
+                    language: newBook.language,
+                    msrp: newBook.msrp,
+                    pages: newBook.pages,
+                    datePublished: newBook.publish_date,
+                    publisher: newBook.publisher,
+                    title: newBook.title,
+                    titleLong: newBook.title_long,
+                    subjects: newBook.subjects
+                })
+            }
         })
         .catch(err => {
             console.log('Error: ', err);

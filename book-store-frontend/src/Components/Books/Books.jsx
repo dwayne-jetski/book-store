@@ -24,6 +24,8 @@ function Books(props){
 
     }, []);
 
+    
+
     function handleClick(e){
         console.log("product ID: ", e.target.id);
         console.log("store ID: ", e.target.name);
@@ -36,19 +38,13 @@ function Books(props){
         console.log(userId);
 
 
-        axios.get(url)
-        .then(res => {
-            setAddBook(res.data);
 
-            console.log(addBook);   
-
-        });
-
-        if(addBook !== null){
-            console.log("made it in!")
-            axios.put('http://localhost:5000/api/users/cart/addBook/'+userId, addBook)
-            .then(res=> console.log(res));
+        async function getBookData(){
+            const response = await Promise
         }
+    
+        axios.put('http://localhost:5000/api/users/cart/addBook/'+userId, addBook)
+        .then(res=> console.log(res));
  
 
         //get the book via axios.get('http://localhost:5000/api/store/products/'+bookid).then(res=> )

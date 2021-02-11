@@ -29,6 +29,7 @@ function Login(props){
             setAuthToken(token);
 
             props.setCurrentUser(jwt_decode(token));
+
             axios.get(url+props.currentUser.id, )
             .then(res=> {
                 console.log(res.data); 
@@ -42,7 +43,7 @@ function Login(props){
         })
         .catch(err => {
             console.log(err);
-        })
+        });
 
         
     }
