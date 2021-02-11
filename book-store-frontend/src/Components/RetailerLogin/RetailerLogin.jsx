@@ -42,13 +42,12 @@ function RetailerLogin(props){
             });
             
 
-            props.history.push('/books');
-
         })
         .catch(err => {
             console.log(err);
         });
 
+        props.history.push('/retailer/main');
         
     }
 
@@ -84,4 +83,4 @@ function RetailerLogin(props){
     )
 }
 
-export default RetailerLogin;
+export default withRouter(RetailerLogin);
