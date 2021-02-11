@@ -83,7 +83,7 @@ function Books(props){
                             <Card.Text>
                                 Price: ${price}
                             </Card.Text>
-                            {(inventory < 1 ) ? <Button>out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e )=> handleClick(e)}>Add to Cart</Button>}
+                            {(inventory < 1 ) ? <Button variant="danger">out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e )=> handleClick(e)}>Add to Cart</Button>}
                         </Card.Body>
                     </Card>
                 </Col>

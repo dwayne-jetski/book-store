@@ -1,3 +1,4 @@
+import React from 'react';
 import { Nav, Navbar, Col, Button, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap';
 import SearchBar from '../SearchBar/SearchBar'
@@ -12,6 +13,21 @@ function MyNavBar(props) {
 
   }
 
+  const loginAndRegisterLinks = () =>{
+
+    return(
+      <React.Fragment>
+        <LinkContainer to="/login">
+          <NavItem eventKey={2}>login</NavItem>
+        </LinkContainer>
+        <Col/>
+        <LinkContainer to="/register">
+          <NavItem eventKey={3}>Register</NavItem>
+        </LinkContainer>
+      </React.Fragment>
+    )
+  }
+
     return(
 
       <Navbar bg="dark" variant="dark">
@@ -22,13 +38,7 @@ function MyNavBar(props) {
               <NavItem eventKey={1}>Books</NavItem>
             </LinkContainer>
             <Col/>
-            <LinkContainer to="/login">
-              <NavItem eventKey={2}>login</NavItem>
-            </LinkContainer>
-            <Col/>
-            <LinkContainer to="/register">
-              <NavItem eventKey={3}>Register</NavItem>
-            </LinkContainer>
+            {(props.currentUser === null) ? loginAndRegisterLinks() : null }
             <Col/>
             <LinkContainer to="/retailer/main">
               <NavItem eventKey={4}>Retailer Main</NavItem>

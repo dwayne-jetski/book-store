@@ -6,10 +6,11 @@ function MyCart(props){
 
     const [ userCart, setUserCart ] = useState(null);
     const [ cartTotal, setCartTotal ] = useState(0.00);
+    const [ orderComplete, setOrderComplete ] = useState(false);
 
 
     useEffect(() => {
-        if(props.currentUser !== null){
+        if( props.currentUser !== null ){
             
             const id = props.currentUser.id;
 
@@ -18,6 +19,9 @@ function MyCart(props){
                 setUserCart(res.data.cart);
             });
         }
+
+        setOrderComplete(false);
+
     }, []);
 
 
