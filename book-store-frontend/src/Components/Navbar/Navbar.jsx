@@ -1,5 +1,6 @@
 import React from 'react';
-import { Nav, Navbar, Col, Button, NavItem } from 'react-bootstrap'
+import { Nav, Navbar, Col, Button, NavItem } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import SearchBar from '../SearchBar/SearchBar'
 
@@ -17,15 +18,15 @@ function MyNavBar(props) {
 
     return(
       <React.Fragment>
-        <LinkContainer to="/login">
-          <NavItem eventKey={2}>login</NavItem>
-        </LinkContainer>
-        <Col/>
         <LinkContainer to="/register">
           <NavItem eventKey={3}>Register</NavItem>
         </LinkContainer>
       </React.Fragment>
     )
+  }
+
+  const toLogin = () => {
+    props.history.push('/login')
   }
 
     return(
@@ -40,10 +41,7 @@ function MyNavBar(props) {
             <Col/>
             {(props.currentUser === null) ? loginAndRegisterLinks() : null }
             <Col/>
-            <LinkContainer to="/retailer/main">
-              <NavItem eventKey={4}>Retailer Main</NavItem>
-            </LinkContainer>
-            <Col/>
+
             <LinkContainer to="/retailer/login">
               <NavItem eventKey={5}>Retailer login</NavItem>
             </LinkContainer>
@@ -55,11 +53,11 @@ function MyNavBar(props) {
         </Col>
 
         <Col xs={5}>
-          {SearchBar()}
+          
         </Col>
 
         <Col xs={3}>
-          {(props.currentUser === null) ? <Nav.Link href="/login">Login</Nav.Link> : <Button variant="outline-info" onClick={Logout} >Logout</Button>}
+          {(props.currentUser === null) ? <Button variant="outline-info" onClick={()=>toLogin()}>Login</Button> : <Button variant="outline-info" onClick={Logout} >Logout</Button>}
         </Col>
       
       </Navbar>
@@ -67,4 +65,4 @@ function MyNavBar(props) {
     )
 }
 
-export default MyNavBar;
+export default withRouter(MyNavBar);
