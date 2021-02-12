@@ -20,7 +20,7 @@ function App() {
   return(
     <div>
       <Router history={history}>
-      <MyNavBar setCurrentUser={setCurrentUser} currentUser={currentUser} />
+      <MyNavBar setCurrentUser={setCurrentUser} currentUser={currentUser} history={history}/>
         <Switch>
           <PrivateRoute exact path="/"> 
             <Books setCurrentUser={setCurrentUser} currentUser={currentUser} history={history} />

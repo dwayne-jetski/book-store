@@ -12,6 +12,8 @@ function MyNavBar(props) {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('user');
 
+    props.history.push('/books');
+
   }
 
   const loginAndRegisterLinks = () =>{
@@ -56,7 +58,7 @@ function MyNavBar(props) {
         </Col>
 
         <Col xs={3}>
-          {(props.currentUser === null) ? <Button variant="outline-info" onClick={()=>toLogin()}>Login</Button> : <Button variant="outline-info" onClick={Logout} >Logout</Button>}
+          {(props.currentUser === null) ? <Button variant="outline-info" onClick={()=>toLogin()}>Login</Button> : <Button variant="outline-info" onClick={()=>Logout()} >Logout</Button>}
         </Col>
       
       </Navbar>
