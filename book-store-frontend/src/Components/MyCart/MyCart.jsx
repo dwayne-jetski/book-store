@@ -1,17 +1,16 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Row, Form, Col, FormControl, Button, DropdownButton, Dropdown, FormCheck, Image } from 'react-bootstrap';
+import StripeCheckout from 'react-stripe-checkout';
 import StripeKey from '../StripeKey';
-import useForm from '../UseForm/UseForm';
 import StatesList from './StatesList';
 import './MyCart.css';
-import e from 'cors';
 
 function MyCart(props){
 
     const [ userCart, setUserCart ] = useState(null);
-    const [ cartTotal, setCartTotal ] = useState(0.00);
     const [ orderComplete, setOrderComplete ] = useState(false);
+    const [ orderTotal, setOrderTotal ] = useState(0.00);
     const [ itemRemoved, setItemRemoved ] = useState(false);
     const [ billingSameAsShipping, setBillingSameAsShipping ] = useState(false);
     const [values, setValues] = useState({});
@@ -23,14 +22,19 @@ function MyCart(props){
             const id = props.currentUser._id;
             axios.get('http://localhost:5000/api/users/'+id, )
             .then(res=>{
+                
                 setUserCart(res.data.cart);
+                const total = res.data.cart.reduce((totalPrice, book) => totalPrice + book.price, 0)
+                console.log(total)
+                setOrderTotal(total);
+
             });
         }
 
         setBillingSameAsShipping(false);
         setOrderComplete(false);
 
-    }, [orderComplete, itemRemoved]);
+    }, []);
 
     const handleChange = (event) =>{
         
@@ -195,32 +199,23 @@ function MyCart(props){
 
     }
 
-    const DisplayCartTotal = () => {
-
-        if (props.currentUser !== null){
-
-            let cartItems = props.currentUser.cart;
-
-            let cartTotal = 0.00;
-
-            for(let i = 0; i < userCart.length; i++){
-                cartTotal = cartTotal + cartItems[i].price;
-            }
-
-            return(<React.Fragment>{cartTotal}</React.Fragment>);
+    const getCartTotal = () => {
+        if(userCart !== null){
+          const total = userCart.reduce((totalPrice, book) => totalPrice + book.price, 0)
+          console.log(total)
+          setOrderTotal(total);
+          return total;
         }
-
     }
 
     const DisplayCartItems = () => {
 
         if(userCart !== null){
-            
-            
+        
 
             return userCart.map((data, index) => {
                 const { authors, binding, datePublished, dimensions, edition, image, inventory, isbn, isbn13, language, msrp, pages, price, publisher, storeId, subjects, synopsis, title, titleLong, _id } = data;
-                
+
                 return(
                     <div className="cart_item" >
                         <Row>
@@ -245,6 +240,10 @@ function MyCart(props){
     }
 
 
+    function handleToken(token, addresses) {
+        console.log({token, addresses});
+    }
+
     const CartDisplay = () =>{
 
         return(
@@ -252,8 +251,8 @@ function MyCart(props){
                 <Row>
                     <Col xs={1}/>
                     <Col xs={4}>
+                        <h1>Cart Total: ${orderTotal}</h1>
                         <br/>
-                        <h1>Cart Total: ${DisplayCartTotal()}</h1>
                         <h1>Cart Items: </h1>
                         <br/>
                         {DisplayCartItems()}
@@ -268,6 +267,14 @@ function MyCart(props){
                         <br/> <br/>
                         <h1>Billing Address: </h1>
                         {BillingAddressInfo()}
+                        <br/><br/>
+                        <StripeCheckout 
+                            stripeKey = {StripeKey.publishableKey}
+                            token = {handleToken}
+                            billingAddress
+                            shippingAddress
+                            amount={orderTotal}
+                        />
                     </Col>
                     <Col xs={1}/>
                 </Row>
@@ -282,6 +289,7 @@ function MyCart(props){
         <React.Fragment>
                 <Row/>
                 <Row>
+                    <Button onClick={()=> console.log(orderTotal)}>CLICK ME!</Button>
                     <Col xs={4}/>
                         {(props.currentUser === null) ? <h1>Guest's Cart:</h1> :<h1> {props.currentUser.firstName + " " + props.currentUser.lastName }'s Cart:</h1>}
                 </Row>

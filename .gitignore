@@ -104,3 +104,4 @@ dist
 .tern-port
 
 /book-store-backend/config/keys.js
+/book-store-backend/config/stripekeys.js
