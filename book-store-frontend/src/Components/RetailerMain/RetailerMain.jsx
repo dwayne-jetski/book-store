@@ -15,6 +15,9 @@ function RetailerMain(props){
         if(props.currentUser === null){
             props.history.push('/books')
         }
+        if(props.currentUser.type === 'customer'){
+            props.history.push('/books')
+        }
     }
 
     useEffect(()=>{

@@ -62,7 +62,7 @@ function RetailerLogin(props){
             <Col xs={6} >
                 <br/>
                 <Row>
-                    <h1 className="header-text">Welcome! Please login or sign up!</h1>
+                    <h1 className="header-text">Log Into Your Bookstore Below</h1>
                 </Row>
 
                 

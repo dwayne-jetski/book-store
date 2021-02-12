@@ -217,14 +217,6 @@ function MyCart(props){
 
     }
 
-    const getCartTotal = () => {
-        if(userCart !== null){
-          const total = userCart.reduce((totalPrice, book) => totalPrice + book.price, 0)
-          console.log(total)
-          setOrderTotal(total);
-          return total;
-        }
-    }
 
     const DisplayCartItems = () => {
 
@@ -279,35 +271,33 @@ function MyCart(props){
         return(
             <React.Fragment>
                 <Row>
-                    <Col xs={1}/>
+                    <Col xs={2}/>
                     <Col xs={4}>
                         <h1>Cart Total: ${orderTotal}</h1>
                         <br/>
                         <h1>Cart Items: </h1>
                         <br/>
-                        {DisplayCartItems()}
                     </Col>
                     <Col xs={1} />
                     <Col xs={4}>
-                        <h1>Credit Card Info: </h1>
-                        {CreditCardInfo()}
-                        <br/> <br/>
-                        <h1>Shipping Address: </h1>
-                        {ShippingAddressInfo()}
-                        <br/> <br/>
-                        <h1>Billing Address: </h1>
-                        {BillingAddressInfo()}
-                        <br/><br/>
                         <StripeCheckout 
                             stripeKey = {StripeKey.publishableKey}
                             token = {handleToken}
                             billingAddress
                             shippingAddress
                             amount={products.orderTotal * 100}
-                        />
+                            />
                     </Col>
-                    <Col xs={1}/>
+                    <Col xs={2}/>
                 </Row>
+                <Row>
+                    <Col/>
+                    <Col>
+                    {DisplayCartItems()}
+                    </Col>
+                    <Col/>
+                </Row>
+
             </React.Fragment>
         )
     }
@@ -319,8 +309,7 @@ function MyCart(props){
         <React.Fragment>
                 <Row/>
                 <Row>
-                    <Button onClick={()=> console.log(products)}>CLICK ME!</Button>
-                    <Col xs={4}/>
+                    <Col xs={3}/>
                         {(props.currentUser === null) ? <h1>Guest's Cart:</h1> :<h1> {props.currentUser.firstName + " " + props.currentUser.lastName }'s Cart:</h1>}
                 </Row>
                 
