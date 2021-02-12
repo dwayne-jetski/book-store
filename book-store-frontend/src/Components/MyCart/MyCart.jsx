@@ -4,7 +4,10 @@ import { Row, Form, Col, FormControl, Button, DropdownButton, Dropdown, FormChec
 import StripeCheckout from 'react-stripe-checkout';
 import StripeKey from '../StripeKey';
 import StatesList from './StatesList';
+import { toast } from 'react-toastify';
 import './MyCart.css';
+
+toast.configure();
 
 function MyCart(props){
 
@@ -15,6 +18,8 @@ function MyCart(props){
     const [ billingSameAsShipping, setBillingSameAsShipping ] = useState(false);
     const [values, setValues] = useState({});
 
+    const [ products, setProducts ] = useState({});
+
 
     useEffect(() => {
 
@@ -23,11 +28,24 @@ function MyCart(props){
             axios.get('http://localhost:5000/api/users/'+id, )
             .then(res=>{
                 
-                setUserCart(res.data.cart);
-                const total = res.data.cart.reduce((totalPrice, book) => totalPrice + book.price, 0)
-                console.log(total)
-                setOrderTotal(total);
-
+                if(res.data.cart !== undefined && res.data.cart !== null ){
+                    setUserCart(res.data.cart);
+                    const total = res.data.cart.reduce((totalPrice, book) => totalPrice + book.price, 0)
+                    console.log(total)
+                    setOrderTotal(total);
+                    console.log(res.data.cart);
+                    const names = res.data.cart.map((data, index) => {
+                        console.log(data.title)
+                        return {
+                            title: data.title,
+                            
+                        }
+                    });
+                    setProducts({
+                        name: names,
+                        price: total
+                    })
+                }
             });
         }
 
@@ -240,8 +258,20 @@ function MyCart(props){
     }
 
 
-    function handleToken(token, addresses) {
+    async function handleToken(token, addresses) {
         console.log({token, addresses});
+        const response = await axios.post('http://localhost:5000/api/users/checkout', {
+            token, products
+        });
+
+        const { status } = response.data;
+        if(status === 'success'){
+            toast('Success! Check email for details', { type: 'success'})
+        } else {
+            toast('Something went wrong', {
+                type: 'error'
+            })
+        }
     }
 
     const CartDisplay = () =>{
@@ -273,7 +303,7 @@ function MyCart(props){
                             token = {handleToken}
                             billingAddress
                             shippingAddress
-                            amount={orderTotal}
+                            amount={products.orderTotal * 100}
                         />
                     </Col>
                     <Col xs={1}/>
@@ -289,7 +319,7 @@ function MyCart(props){
         <React.Fragment>
                 <Row/>
                 <Row>
-                    <Button onClick={()=> console.log(orderTotal)}>CLICK ME!</Button>
+                    <Button onClick={()=> console.log(products)}>CLICK ME!</Button>
                     <Col xs={4}/>
                         {(props.currentUser === null) ? <h1>Guest's Cart:</h1> :<h1> {props.currentUser.firstName + " " + props.currentUser.lastName }'s Cart:</h1>}
                 </Row>

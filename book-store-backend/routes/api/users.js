@@ -3,6 +3,9 @@ const router = express.Router();
 const bycrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
+const stripeKey = require('../../config/stripekeys').secretKey;
+const stripe = require('stripe')("sk_test_51IJXuaLeWVqFmmtWfvsHybXwGhk0mfR9JdOlHUuvtlBqXu63uu63DMDYoDJQZ17hiQzeN6zfzD3FTHNfsf3hVvUW00s09Tix8v");
+const {v4 : uuidv4} = require('uuid')
 
 //load input validation
 const validateRegisterInput = require('../../validation/register');
@@ -11,6 +14,59 @@ const validateLoginInput = require('../../validation/login');
 const User = require('../../models/User');
 const { userInfo } = require('os');
 
+
+router.get('/users/checkout/get', (req, res) => {
+    console.log('gotten')
+    res.send(stripe);
+});
+
+router.post('/users/checkout', async (req, res) => {
+    console.log('Request: ',req.body);
+
+    let error; 
+    let status;
+    try{
+        const { products, token } = req.body;
+
+        console.log(products);
+
+        const customer = await stripe.customers.create({
+            email: token.email,
+            source: token.id
+        });
+
+        const idempotencyKey = uuidv4();
+        const charge = await stripe.charges.create(
+            {
+                amount: products.price * 100,
+                currency: "usd",
+                customer: customer.id,
+                receipt_email: token.email,
+                description: `Purchased the ${products.names}`,
+                shipping: {
+                    name: token.card.name,
+                    address: {
+                        line1: token.card.address_line1,
+                        line2: token.card.address_line2,
+                        city: token.card.address_city,
+                        country: token.card.address_country,
+                        postal_code: token.card.address_zip
+                    }
+                }
+            }, 
+            {
+                idempotencyKey
+            }
+        );
+        console.log("Charge: ", { charge });
+        status = "success";
+    } catch (error) {
+        console.log("Error: ", error);
+        status= "failure"
+    }
+
+    res.json({ error, status })
+});
 
 
 

@@ -24,6 +24,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "stripe": "^8.135.0",
+    "uuid": "^8.3.2",
     "validator": "^13.5.2"
   }
 }
