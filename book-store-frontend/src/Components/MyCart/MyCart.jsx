@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Row, Form, Col, FormControl, Button, DropdownButton, Dropdown, FormCheck, Image } from 'react-bootstrap';
 import StripeCheckout from 'react-stripe-checkout';
 import StripeKey from '../StripeKey';
-import StatesList from './StatesList';
 import { toast } from 'react-toastify';
 import './MyCart.css';
 
@@ -15,22 +14,26 @@ function MyCart(props){
     const [ orderComplete, setOrderComplete ] = useState(false);
     const [ orderTotal, setOrderTotal ] = useState(0.00);
     const [ itemRemoved, setItemRemoved ] = useState(false);
-    const [ billingSameAsShipping, setBillingSameAsShipping ] = useState(false);
+    const [ userAddress, setUserAddress ] = useState();
     const [values, setValues] = useState({});
 
     const [ products, setProducts ] = useState({});
 
 
     useEffect(() => {
-
-        if( props.currentUser !== null ){
+        console.log('ran')
+        setUserCart([]);
+        setOrderTotal(0.00);
+        
+        if( props.currentUser !== null && orderComplete === false ){
             const id = props.currentUser._id;
             axios.get('http://localhost:5000/api/users/'+id, )
             .then(res=>{
                 
                 if(res.data.cart !== undefined && res.data.cart !== null ){
                     setUserCart(res.data.cart);
-                    const total = res.data.cart.reduce((totalPrice, book) => totalPrice + book.price, 0)
+                    let total = res.data.cart.reduce((totalPrice, book) => totalPrice + book.price, 0)
+                    total = (parseFloat(total).toFixed(2))
                     console.log(total)
                     setOrderTotal(total);
                     console.log(res.data.cart);
@@ -49,10 +52,10 @@ function MyCart(props){
             });
         }
 
-        setBillingSameAsShipping(false);
+        
         setOrderComplete(false);
 
-    }, []);
+    }, [orderComplete]);
 
     const handleChange = (event) =>{
         
@@ -66,155 +69,6 @@ function MyCart(props){
         event.preventDefault();
         console.log(values);
         
-    }
-
-    const CreditCardInfo = () =>{
-        return(
-
-                    
-            <Form>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridName">
-                        <Form.Label>First Name: </Form.Label>
-                        <Form.Control type="text" name="firstName" placeholder="First Name" value={values.firstName} onChange={handleChange} required={true} />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridName">
-                        <Form.Label>Last Name: </Form.Label>
-                        <Form.Control type="text" name="lastName" placeholder="Last Name"  value={values.lastName} onChange={handleChange} required={true} />
-                    </Form.Group>
-                </Form.Row>
-            
-
-                <Form.Row>
-                    <Form.Group as={Col} controlId="fromGridCreditCard">    
-                        <Form.Label>Credit Card Number: </Form.Label>
-                        <Form.Control type="text" name="creditCard" placeholer="Credit Card Number" value={values.creditCard} onChange={handleChange} required={true} />
-                    </Form.Group>
-                </Form.Row>
-                
-                <Form.Row>
-                    <Form.Group as={Col} controlId="fromGridCVV">
-                        <Form.Label>CVV</Form.Label>
-                        <Form.Control type="text" name="cvv" placeholer="CVV" value={values.cvv} onChange={handleChange} required={true} />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="fromGridMonth">
-                        <Form.Label>Month</Form.Label>
-                        <Form.Control as="select" name="month" value={values.month} onChange={handleChange} required={true} >
-                            <option name="month" value="01">January</option>
-                            <option name="month" value="02">February</option>
-                            <option name="month" value="03">March</option>
-                            <option name="month" value="04">April</option>
-                            <option name="month" value="05">May</option>
-                            <option name="month" value="06">June</option>
-                            <option name="month" value="07">July</option>
-                            <option name="month" value="08">August</option>
-                            <option name="month" value="09">September</option>
-                            <option name="month" value="10">October</option>
-                            <option name="month" value="11">November</option>
-                            <option name="month" value="12">December</option>
-                        </Form.Control>
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="fromGridYear">
-                        <Form.Label>Year</Form.Label>
-                        <Form.Control as="select" name="year" value={values.year} onChange={handleChange} required={true} >
-                            <option name="year" value="21"> 2021</option>
-                            <option name="year" value="22"> 2022</option>
-                            <option name="year" value="23"> 2023</option>
-                            <option name="year" value="24"> 2024</option>
-                            <option name="year" value="25"> 2025</option>
-                            <option name="year" value="26"> 2026</option>
-                        </Form.Control>
-                    </Form.Group>
-                </Form.Row>
-            </Form>
-                    
-                
-        )
-    }
-
-    const ShippingAddressInfo = () =>{
-        return(
-
-            <Form>
-
-                <Form.Group controlId="formGridAddress1">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control placeholder="1234 Main St" name="shippingAddress1" value={values.shippingAddress1} onChange={handleChange} required={true} />
-                </Form.Group>
-
-                <Form.Group controlId="formGridAddress2">
-                    <Form.Label>Address 2</Form.Label>
-                    <Form.Control placeholder="Apartment, studio, or floor" name="shippingAddress2" value={values.shippingAddress2} onChange={handleChange} required={true} />
-                </Form.Group>
-
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control  name="shippingCity" value={values.shippingCity} onChange={handleChange} required={true} />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridState">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control as="select" defaultValue="Choose..." name="shippingState" value={values.shippingState} onChange={handleChange} required={true} >
-                        {StatesList()};
-                    </Form.Control>
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridZip">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control name="shippingZip" value={values.shippingZip} onChange={handleChange} required={true} />
-                    </Form.Group>
-                </Form.Row>
-            </Form>
-        )
-    }
-
-    const BillingAddressInfo = () => {
-
-
-        return(
-            <React.Fragment>
-
-                <Button onClick={()=>setBillingSameAsShipping(!billingSameAsShipping)}>Same As Shipping Address?</Button>
-                <br/><br/>
-
-                <Form>
-
-                    <Form.Group controlId="formGridAddress1"  >
-                        <Form.Label>Address</Form.Label>
-                        <Form.Control placeholder="1234 Main St" name="billingAddress1" value={billingSameAsShipping === true ? values.shippingAddress1 : values.billingAddress1} onChange={handleChange} required={true} />
-                    </Form.Group>
-
-                    <Form.Group controlId="formGridAddress2">
-                        <Form.Label>Address 2</Form.Label>
-                        <Form.Control placeholder="Apartment, studio, or floor" name="billingAddress2" value={billingSameAsShipping === true ? values.shippingAddress2 : values.billingAddress2} onChange={handleChange} required={true} />
-                    </Form.Group>
-
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="formGridCity">
-                        <Form.Label>City</Form.Label>
-                        <Form.Control  name="billingCity" value={billingSameAsShipping === true ? values.shippingCity : values.billingCity} onChange={handleChange} required={true} />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridState">
-                        <Form.Label>State</Form.Label>
-                        <Form.Control as="select" defaultValue="Choose..."  name="billingState" value={billingSameAsShipping === true ? values.shippingState : values.billingState} onChange={handleChange} required={true} >
-                            {StatesList()};
-                        </Form.Control>
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridZip">
-                        <Form.Label>Zip</Form.Label>
-                        <Form.Control  name="billingZip" value={billingSameAsShipping === true ? values.shippingZip : values.billingZip} onChange={handleChange} required={true} />
-                        </Form.Group>
-                    </Form.Row>
-                </Form>
-            </React.Fragment>
-        )
-
     }
 
 
@@ -264,40 +118,88 @@ function MyCart(props){
                 type: 'error'
             })
         }
+
+        const url="http://localhost:5000/api/"
+        const userId = props.currentUser._id
+        const cart = userCart;
+        const total = orderTotal;
+
+        await axios.put(url+'users/orders/neworder/'+userId, cart).then(res => {
+            console.log(res.data);
+            
+        });
+
+        await axios.put(url+'users/cart/emptycart/'+userId).then(res=>{
+            console.log(res);
+            setOrderComplete(true)
+            setOrderTotal(0.00)
+            setUserCart([])
+        });
+
+        const order = {
+            addresses: addresses,
+            books: cart,
+            total: total,
+            contact: {
+                email: props.currentUser.email,
+                firstName: props.currentUser.firstName,
+                lastName: props.currentUser.lastName
+            }
+        }
+
+        await axios.put(url+'store/neworder/6020bd97c3430e64b4f173ed', order).then(res => {
+            console.log(res)
+        });
+    
+        
     }
 
     const CartDisplay = () =>{
 
+        function displayCheckout(){
+            return(
+                <React.Fragment>
+                    <Row>
+                        <Col xs={2}/>
+                        <Col xs={4}>
+                            <h1>Cart Total: ${orderTotal}</h1>
+                            <br/>
+                            <h1>Cart Items: </h1>
+                            <br/>
+                        </Col>
+                        <Col xs={1} />
+                        <Col xs={4}>
+                            {orderTotal < .01 ? <div></div> : <StripeCheckout 
+                                stripeKey = {StripeKey.publishableKey}
+                                token = {handleToken}
+                                billingAddress
+                                shippingAddress
+                                amount={products.orderTotal * 100}
+                                />}
+                        </Col>
+                        <Col xs={2}/>
+                    </Row>
+                    <Row>
+                        <Col/>
+                        <Col>
+                        {DisplayCartItems()}
+                        </Col>
+                        <Col/>
+                    </Row>
+                </React.Fragment>
+            )
+        }
+
+        function displayOrderCompleted(){
+            return(
+                <h1>Thank you for your order, {props.currentUser.firstName} {props.currentUser.lastName} </h1>
+            )
+        }
+
+
         return(
             <React.Fragment>
-                <Row>
-                    <Col xs={2}/>
-                    <Col xs={4}>
-                        <h1>Cart Total: ${orderTotal}</h1>
-                        <br/>
-                        <h1>Cart Items: </h1>
-                        <br/>
-                    </Col>
-                    <Col xs={1} />
-                    <Col xs={4}>
-                        <StripeCheckout 
-                            stripeKey = {StripeKey.publishableKey}
-                            token = {handleToken}
-                            billingAddress
-                            shippingAddress
-                            amount={products.orderTotal * 100}
-                            />
-                    </Col>
-                    <Col xs={2}/>
-                </Row>
-                <Row>
-                    <Col/>
-                    <Col>
-                    {DisplayCartItems()}
-                    </Col>
-                    <Col/>
-                </Row>
-
+                    {orderComplete === true ? displayOrderCompleted() : displayCheckout()}
             </React.Fragment>
         )
     }

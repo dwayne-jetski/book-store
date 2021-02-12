@@ -131,22 +131,26 @@ router.get(`/store/:id`, async (req, res) => {
 
 });
 
-router.post(`/store/neworder`, async (req, res) => {
+router.put(`/store/neworder/:id`, async (req, res) => {
     //here is where the function to add a new order to the orders array will go.
+    try{    
+        const id = req.params.id
 
-    const id = req.body.storeId
+        console.log(req.body);
 
-    Retailer.findByIdAndUpdate(id, 
-        { 
-            $push: {
+        Retailer.findByIdAndUpdate(id, 
+            { 
+                $push: {
 
-                
+                    openOrders: req.body
 
-            }
-        }, (err) => {
-
-    })
-
+                }
+            }, {new: true}
+        )
+    } catch (ex) {
+        console.log(ex);
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
 });
 
 router.put(`/store/completedorder`, async (req, res) => {

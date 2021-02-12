@@ -244,7 +244,63 @@ router.put(`/users/cart/removebook/:id`, async (req, res) =>{
         const id = req.params.id;
         const updates = {
             $pull: {
-                cart: { title: req.body.title, id: req.body.id }
+                cart: { id: req.body.id }
+            }
+        };
+
+        console.log(updates);
+
+        const result = await User.findByIdAndUpdate(id, updates, {new: true, multi: false})
+        .then(() => {
+            res.status(200).json({
+                message: `${updates.title} was removed from your cart!`
+            });
+        });
+
+        res.send(result);
+
+
+    } catch (ex) {
+        console.log(ex);
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
+router.put(`/users/cart/emptycart/:id`, async (req, res) =>{
+    try{
+
+        const id = req.params.id;
+        const updates = {
+            $set: {
+                cart: [ ]
+            }
+        };
+
+        console.log(updates);
+
+        const result = await User.findByIdAndUpdate(id, updates, {new: true})
+        .then(() => {
+            res.status(200).json({
+                message: `Your cart has been emptied.`
+            });
+        });
+
+        res.send(result);
+
+
+    } catch (ex) {
+        console.log(ex);
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
+router.put(`/users/orders/neworder/:id`, async (req, res) =>{
+    try{
+
+        const id = req.params.id;
+        const updates = {
+            $push: {
+                orders: [ req.body ]
             }
         };
 
