@@ -92,11 +92,7 @@ function RetailerMain(props){
                      <Button variant="info" onClick={ToggleDisplaySalesStats} block>Sales</Button>
                     </Col>
                     <Col>
-                        <h1>See Book Requests</h1>
-                        {/* Function for Book Requests */}
-                    </Col>
-                    <Col>
-                        <Button variant="info"  onClick={ToggleHeroImage} block>Store Image</Button>
+                        <Button variant="info"  onClick={ToggleHeroImage} block>Banner</Button>
                     </Col>
                     <Col/>
                 </Row>

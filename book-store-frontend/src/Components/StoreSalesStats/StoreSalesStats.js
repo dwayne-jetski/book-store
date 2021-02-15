@@ -25,14 +25,18 @@ export default function StoreSalesStats(props) {
                 const { total } = data;
 
                 return(parseFloat(total));
-            });
+        });
+
+        const totalDollarsInSales = totalsData1.reduce((a, b) => {
+            return a+b;
+        });
 
         let saleNames = []
         for (let i = 0; i < totalsData1.length; i++){
-            saleNames.push(`Sale Number ${i+1}`)
-        }
+            saleNames.push(`Transaction #${i+1}`)
+        };
 
-        let bgCol = []
+        let bgCol = [];
         for (let i = 0; i < salesData1.length; i++){
             if(i%5 === 0){
                 bgCol.push( 'rgba(255, 99, 132, 0.2)')
@@ -49,7 +53,7 @@ export default function StoreSalesStats(props) {
             else if (i%5 === 4){
                 bgCol.push( 'rgba(255, 159, 64, 0.2)')
             }
-        }
+        };
         let borCol = [];
         for (let i = 0; i < salesData1.length; i++){
             if(i%5 === 0){
@@ -67,8 +71,7 @@ export default function StoreSalesStats(props) {
             else if (i%5 === 4){
                 borCol.push( 'rgba(255, 159, 64, 1)')
             }
-        }
-      
+        };
 
         const data = {
             labels: saleNames,
@@ -80,9 +83,12 @@ export default function StoreSalesStats(props) {
                 borderWidth: 1
 
             }]
-        }
+        };
 
         const options = {
+            legend: {
+                
+            },
             scales: {
                 yAxes: [{
                     ticks: {
@@ -91,12 +97,15 @@ export default function StoreSalesStats(props) {
                     }
                 }]
             }
-        }
-
-        console.log(data);
+        };
 
         return(
             <React.Fragment>
+                
+                <Row>
+                    Total Sales: ${totalDollarsInSales}
+                </Row>
+
                 <Bar 
                 
                 data={data}

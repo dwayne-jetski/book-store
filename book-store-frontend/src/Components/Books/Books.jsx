@@ -56,11 +56,28 @@ function Books(props){
         setItemAddedToCart(!itemAddedToCart);
     }
 
+    function filterData(value) {
+        
+        
+        return bookData.filter((data) => {
+            const { authors, isbn, isbn13, title, price, subjects, _id } = data;
+
+            if( authors.toLowerCase().includes(value) || isbn.toLowerCase().includes(value) || isbn13.toLowerCase().includes(value) || 
+                title.toLowerCase().includes(value) || price.toString().includes(value) || subjects.toLowerCase().includes(value) || _id.toString().includes(value)
+            ){
+                return data;
+            }
+
+        })
+
+    }
+
     function DisplayBooks() {
 
-        let filteredResults = bookData;
+        let filteredData = filterData(values.search.toLowerCase());
+        console.log(filteredData);
 
-        return bookData.map((data, index) => {
+        return filteredData.map((data, index) => {
             const { authors, binding, datePublished, dimensions, edition, image, inventory, isbn, isbn13, language, msrp, pages, price, publisher, storeId, subjects, synopsis, title, titleLong, _id } = data;
             return(
                 <Col>
