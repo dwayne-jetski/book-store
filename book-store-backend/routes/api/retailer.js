@@ -12,9 +12,6 @@ const validateLoginInput = require("../../validation/login");
 
 const Retailer = require('../../models/Retailer');
 const Book = require('../../models/Book');
-const HeroImage = require('../../models/heroImage');
-const { userInfo } = require('os');
-const { reset } = require('nodemon');
 
 
 //@route POST api/store/createstore
@@ -136,9 +133,7 @@ router.put(`/store/neworder/:id`, async (req, res) => {
     try{    
         const id = req.params.id
 
-        console.log(req.body);
-
-        Retailer.findByIdAndUpdate(id, 
+        const result = await Retailer.findByIdAndUpdate(id, 
             { 
                 $push: {
 
@@ -147,10 +142,13 @@ router.put(`/store/neworder/:id`, async (req, res) => {
                 }
             }, {new: true}
         )
+        
+        res.send(result);
     } catch (ex) {
         console.log(ex);
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
+
 });
 
 router.put(`/store/completedorder`, async (req, res) => {
@@ -352,15 +350,6 @@ router.put(`/store/products/update/:id`, async (req, res) =>{
         console.log(ex);
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
-});
-
-//may just take care of this on the front end by filtering the array
-router.get(`store/products/subject`, (req, res) => {
-    //get a list of products by subject
-    const subject = req.subject;
-
-    Book.find({'subjects': {$in: subject}}, )
-
 });
 
 module.exports = router;

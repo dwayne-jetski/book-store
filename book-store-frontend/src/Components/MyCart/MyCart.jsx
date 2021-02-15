@@ -21,7 +21,6 @@ function MyCart(props){
 
 
     useEffect(() => {
-        console.log('ran')
         setUserCart([]);
         setOrderTotal(0.00);
         
@@ -34,9 +33,9 @@ function MyCart(props){
                     setUserCart(res.data.cart);
                     let total = res.data.cart.reduce((totalPrice, book) => totalPrice + book.price, 0)
                     total = (parseFloat(total).toFixed(2))
-                    console.log(total)
+                    
                     setOrderTotal(total);
-                    console.log(res.data.cart);
+                    
                     const names = res.data.cart.map((data, index) => {
                         console.log(data.title)
                         return {
@@ -61,7 +60,7 @@ function MyCart(props){
         
         event.persist();
         setValues(values => ({...values, [event.target.name]: event.target.value}));
-        console.log(values)
+        
     }
 
     const handleSubmit = (event) =>{
@@ -110,6 +109,7 @@ function MyCart(props){
             token, products
         });
 
+        console.log("Stripe Response: ", response);
         const { status } = response.data;
         if(status === 'success'){
             toast('Success! Check email for details', { type: 'success'})
@@ -121,6 +121,7 @@ function MyCart(props){
 
         const url="http://localhost:5000/api/"
         const userId = props.currentUser._id
+        const storeId = "6029940125a06f32685e8649";
         const cart = userCart;
         const total = orderTotal;
 
@@ -147,9 +148,11 @@ function MyCart(props){
             }
         }
 
-        await axios.put(url+'store/neworder/6020bd97c3430e64b4f173ed', order).then(res => {
-            console.log(res)
-        });
+        console.log("Order: ", order)
+
+        await axios.put(url+'store/neworder/'+storeId, order).then(res => {
+            console.log("Successful Order: ", res)
+        }).catch(err=> console.log(err));
     
         
     }

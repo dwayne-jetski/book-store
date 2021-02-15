@@ -12,7 +12,7 @@ export default function HeroImage() {
 
     useEffect(()=>{
         
-        axios.get('http://localhost:5000/api/store/heroimage/6023583e65778950a0e595d0').then(res=>{
+        axios.get('http://localhost:5000/api/store/heroimage/6029940125a06f32685e8649').then(res=>{
             console.log("response: ", res);
             setHeroImage(res.data.image);
             setUpdateDone(false);
@@ -25,7 +25,7 @@ export default function HeroImage() {
         e.preventDefault();
 
 
-        const url = 'http://localhost:5000/api/store/heroimage/update/6023583e65778950a0e595d0'
+        const url = 'http://localhost:5000/api/store/heroimage/update/6029940125a06f32685e8649'
         const newImage = {
             image: values.image
         }

@@ -5,6 +5,7 @@ import AddBook from '../AddBook/AddBook';
 import Inventory from '../Inventory/inventory';
 import EditBook from '../EditBook/EditBook';
 import HeroImage from '../HeroImage/HeroImage';
+import StoreSalesStats from '../StoreSalesStats/StoreSalesStats';
 
 
 
@@ -30,6 +31,7 @@ function RetailerMain(props){
     const [ displayHeroImage, setDisplayHeroImage ] = useState(false);
     const [ bookToEdit, setBookToEdit ] = useState();
     const [ editComplete, setEditComplete ] = useState(false);
+    const [ displaySales, setDisplaySales ] = useState(false);
     
 
 
@@ -37,6 +39,7 @@ function RetailerMain(props){
         setDisplayInventory(!displayInventory);
         setDisplayEditBook(false);
         setDisplayAddBook(false);
+        setDisplaySales(false);
     }
 
     function ToggleAddBook(){
@@ -44,7 +47,7 @@ function RetailerMain(props){
         setDisplayInventory(false);
         setDisplayEditBook(false);
         setDisplayHeroImage(false);
-        console.log(displayAddBook)
+        setDisplaySales(false);
     }
 
     function ToggleHeroImage() {
@@ -52,6 +55,7 @@ function RetailerMain(props){
         setDisplayAddBook(false);
         setDisplayInventory(false);
         setDisplayEditBook(false);
+        setDisplaySales(false);
     }
 
     function ToggleEditBook(e,data){
@@ -60,6 +64,14 @@ function RetailerMain(props){
         //axios.get to get book by id;
 
         setBookToEdit(e.target.id);//this will eventually be set in the axios.get request for the book.
+    }
+
+    function ToggleDisplaySalesStats(){
+        setDisplaySales(!displaySales);
+        setDisplayAddBook(false);
+        setDisplayInventory(false);
+        setDisplayEditBook(false);
+        setDisplayHeroImage(false);
     }
 
     return(
@@ -71,22 +83,20 @@ function RetailerMain(props){
                 <Row className="justify-content-md-center">
                     <Col/>
                     <Col>
-                    <Button onClick={ToggleAddBook} >Add Book</Button>
-                    <Link to="retailer/addbook"></Link>
+                        <Button variant="info" onClick={ToggleAddBook} block>Add Book</Button>
                     </Col>
                     <Col>
-                    <Button onClick={ToggleInventory} >View Inventory</Button>
+                        <Button variant="info" onClick={ToggleInventory} block>Inventory</Button>
                     </Col>
                     <Col>
-                        <h1>See Your Sales Figures</h1>
-                        {/* See Sales Function */}
+                     <Button variant="info" onClick={ToggleDisplaySalesStats} block>Sales</Button>
                     </Col>
                     <Col>
                         <h1>See Book Requests</h1>
                         {/* Function for Book Requests */}
                     </Col>
                     <Col>
-                        <Button onClick={ToggleHeroImage}>Edit Hero Image</Button>
+                        <Button variant="info"  onClick={ToggleHeroImage} block>Store Image</Button>
                     </Col>
                     <Col/>
                 </Row>
@@ -104,6 +114,11 @@ function RetailerMain(props){
                             setEditComplete = {setEditComplete}
                         />}
                         {!displayHeroImage ? <div/> : <HeroImage />}
+                        {!displaySales ? <div/> : <StoreSalesStats 
+                        currentUser={props.currentUser}
+                        
+
+                        />}
                     </Col>
                     <Col> 
                         {!displayEditBook ? <div /> : <EditBook 
