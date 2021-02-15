@@ -58,7 +58,7 @@ function Books(props){
 
     function filterData(value) {
         
-        
+
         return bookData.filter((data) => {
             const { authors, isbn, isbn13, title, price, subjects, _id } = data;
 
@@ -68,14 +68,22 @@ function Books(props){
                 return data;
             }
 
-        })
+        });
 
     }
 
     function DisplayBooks() {
 
-        let filteredData = filterData(values.search.toLowerCase());
-        console.log(filteredData);
+
+        let filteredData;
+
+        if(values.search !== undefined){
+            filteredData = filterData(values.search.toLowerCase());
+            console.log(filteredData);
+        } else {
+            filteredData = bookData;
+        }
+
 
         return filteredData.map((data, index) => {
             const { authors, binding, datePublished, dimensions, edition, image, inventory, isbn, isbn13, language, msrp, pages, price, publisher, storeId, subjects, synopsis, title, titleLong, _id } = data;

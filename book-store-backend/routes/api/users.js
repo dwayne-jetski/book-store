@@ -241,19 +241,22 @@ router.put(`/users/cart/addbook/:id`, async (req, res) =>{
 router.put(`/users/cart/removebook/:id`, async (req, res) =>{
     try{
 
+        console.log(req.params.id)
+        console.log(req.body);
         const id = req.params.id;
         const updates = {
             $pull: {
-                cart: { id: req.body.id }
+                cart: { _id: req.body._id}
             }
         };
 
         console.log(updates);
 
-        const result = await User.findByIdAndUpdate(id, updates, {new: true, multi: false})
+
+        const result = await User.findByIdAndUpdate(id, updates, {new: true})
         .then(() => {
             res.status(200).json({
-                message: `${updates.title} was removed from your cart!`
+                message: `Item was removed from your cart!`
             });
         });
 

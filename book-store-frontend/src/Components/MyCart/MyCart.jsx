@@ -13,9 +13,9 @@ function MyCart(props){
     const [ userCart, setUserCart ] = useState(null);
     const [ orderComplete, setOrderComplete ] = useState(false);
     const [ orderTotal, setOrderTotal ] = useState(0.00);
-    const [ itemRemoved, setItemRemoved ] = useState(false);
     const [ userAddress, setUserAddress ] = useState();
-    const [values, setValues] = useState({});
+    const [ values, setValues ] = useState({});
+    const [ itemRemoved, setItemRemoved ] = useState(false);
 
     const [ products, setProducts ] = useState({});
 
@@ -23,6 +23,7 @@ function MyCart(props){
     useEffect(() => {
         setUserCart([]);
         setOrderTotal(0.00);
+        setItemRemoved(false);
         
         if( props.currentUser !== null && orderComplete === false ){
             const id = props.currentUser._id;
@@ -54,7 +55,7 @@ function MyCart(props){
         
         setOrderComplete(false);
 
-    }, [orderComplete]);
+    }, [orderComplete, itemRemoved]);
 
     const handleChange = (event) =>{
         
@@ -70,6 +71,29 @@ function MyCart(props){
         
     }
 
+    async function removeItem(event) {
+        event.preventDefault(event);
+
+        const userId = props.currentUser._id;
+        const bookId = event.target.id;
+        console.log(bookId)
+       
+
+       
+        await axios.get('http://localhost:5000/api/store/products/'+bookId)
+        .then(res => {
+            console.log(res.data);
+            const removeBook = res.data
+            axios.put('http://localhost:5000/api/users/cart/removebook/'+userId, removeBook)
+            .then(res=> console.log(res));
+
+            setItemRemoved(true);
+        });
+        
+        
+        
+
+    }
 
     const DisplayCartItems = () => {
 
@@ -93,7 +117,7 @@ function MyCart(props){
                                 <br/>
                                 <h5>Price: {price}</h5>
                                 <br/>
-                            <Button variant="danger">Remove</Button>
+                            <Button variant="danger" id={_id} onClick={(event)=>removeItem(event)}>Remove</Button>
                             </Col>
                         </Row>
                     </div>
