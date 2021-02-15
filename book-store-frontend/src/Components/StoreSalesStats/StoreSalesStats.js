@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Button, Row } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 
 export default function StoreSalesStats(props) {
 
@@ -226,8 +226,12 @@ export default function StoreSalesStats(props) {
 
         <React.Fragment>
             <Row>
-                <Button variant="info" onClick={()=>togglePerTransactionBarChart()}>Transaction Sales</Button>
-                <Button variant="info" onClick={()=>toggleSalesByBookBarChart()}>Book Sales</Button>
+                <Col>
+                    <Button variant="info" onClick={()=>togglePerTransactionBarChart()}>Transaction Sales</Button>
+                </Col>
+                <Col>
+                    <Button variant="info" onClick={()=>toggleSalesByBookBarChart()}>Book Sales</Button>
+                </Col>
             </Row>
             {(perTransactionBarChart === false) ? <div/> : getSalesPerTransactionBarChart()}
             {(bookSalesBarChart === false) ? <div/> : getBookSalesByBookBarChart()}

@@ -31,7 +31,6 @@ function AddBook(){
                 isbn: values.isbn, 
                 authors: values.authors,
                 binding: values.binding,
-                datePublished: values.date_published,
                 dimensions: values.dimensions,
                 edition: values.edition,
                 image: values.image,
@@ -47,7 +46,7 @@ function AddBook(){
                 synopsis: values.synopsis,
                 price: parseFloat(values.price),
                 inventory: parseFloat(values.inventory),
-                price: values.price,
+
 
         }
 
@@ -94,7 +93,6 @@ function AddBook(){
                     language: newBook.language,
                     msrp: newBook.msrp,
                     pages: newBook.pages,
-                    datePublished: newBook.publish_date,
                     publisher: newBook.publisher,
                     title: newBook.title,
                     titleLong: newBook.title_long,

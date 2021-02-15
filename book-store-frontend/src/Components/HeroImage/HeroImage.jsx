@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, FormControl, Button, } from 'react-bootstrap';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 import './HeroImage.css'
 import useForm from '../UseForm/UseForm';
 
@@ -8,24 +8,23 @@ export default function HeroImage() {
 
     const [ heroImage, setHeroImage ] = useState(false);
     const [ updateDone, setUpdateDone ] = useState(false);
-    const { values, handleChange, handleSubmit } = useForm();
+    const { values, handleChange } = useForm();
 
     useEffect(()=>{
         
-        axios.get('http://localhost:5000/api/store/heroimage/6029940125a06f32685e8649').then(res=>{
-            console.log("response: ", res);
+        axios.get('http://localhost:5000/api/store/heroimage/6023583e65778950a0e595d0').then(res=>{
             setHeroImage(res.data.image);
             setUpdateDone(false);
         });
         
-    }, [])
+    }, [updateDone])
     
     const NewImage = (e) => {
 
         e.preventDefault();
 
 
-        const url = 'http://localhost:5000/api/store/heroimage/update/6029940125a06f32685e8649'
+        const url = 'http://localhost:5000/api/store/heroimage/update/6023583e65778950a0e595d0'
         const newImage = {
             image: values.image
         }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Row, Form, Col, FormControl, Button, DropdownButton, Dropdown, FormCheck, Image } from 'react-bootstrap';
+import { Row, Col, Button, Image } from 'react-bootstrap';
 import StripeCheckout from 'react-stripe-checkout';
 import StripeKey from '../StripeKey';
 import { toast } from 'react-toastify';
@@ -13,8 +13,6 @@ function MyCart(props){
     const [ userCart, setUserCart ] = useState(null);
     const [ orderComplete, setOrderComplete ] = useState(false);
     const [ orderTotal, setOrderTotal ] = useState(0.00);
-    const [ userAddress, setUserAddress ] = useState();
-    const [ values, setValues ] = useState({});
     const [ itemRemoved, setItemRemoved ] = useState(false);
 
     const [ products, setProducts ] = useState({});
@@ -57,20 +55,6 @@ function MyCart(props){
 
     }, [orderComplete, itemRemoved]);
 
-    const handleChange = (event) =>{
-        
-        event.persist();
-        setValues(values => ({...values, [event.target.name]: event.target.value}));
-        
-    }
-
-    const handleSubmit = (event) =>{
-
-        event.preventDefault();
-        console.log(values);
-        
-    }
-
     async function removeItem(event) {
         event.preventDefault(event);
 
@@ -101,7 +85,7 @@ function MyCart(props){
         
 
             return userCart.map((data, index) => {
-                const { authors, binding, datePublished, dimensions, edition, image, inventory, isbn, isbn13, language, msrp, pages, price, publisher, storeId, subjects, synopsis, title, titleLong, _id } = data;
+                const { authors, image, price, title, _id } = data;
 
                 return(
                     <div className="cart_item" >

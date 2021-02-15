@@ -6,7 +6,6 @@ import axios from 'axios';
 function Inventory(props) {
 
     const [ bookData, setBookData ] = useState(null);
-    const [ filteredResults, setFilteredResults ] = useState(null);
     const [ loading, setLoading ] = useState(true)
     
 

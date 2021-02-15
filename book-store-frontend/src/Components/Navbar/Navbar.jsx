@@ -2,7 +2,6 @@ import React from 'react';
 import { Nav, Navbar, Col, Button, NavItem } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import SearchBar from '../SearchBar/SearchBar'
 
 function MyNavBar(props) {
 

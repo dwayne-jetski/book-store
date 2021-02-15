@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 function EditBook(props){
     const [ values, setValues ] = useState({});
 
-    const [ newBook, setNewBook ] = useState(null);
 
     
     

@@ -66,7 +66,7 @@ function Books(props){
                 title.toLowerCase().includes(value) || price.toString().includes(value) || subjects.toLowerCase().includes(value) || _id.toString().includes(value)
             ){
                 return data;
-            }
+            } 
 
         });
 
@@ -86,11 +86,11 @@ function Books(props){
 
 
         return filteredData.map((data, index) => {
-            const { authors, binding, datePublished, dimensions, edition, image, inventory, isbn, isbn13, language, msrp, pages, price, publisher, storeId, subjects, synopsis, title, titleLong, _id } = data;
+            const { authors, binding, image, inventory, isbn, isbn13, language, pages, price, storeId, subjects, synopsis, title, _id } = data;
             return(
                 <Col>
                     <Card bg="dark" className="card_style" style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={image}/>
+                        <Card.Img variant="top" src={image} alt="image" />
                         
                         <Card.Body >
                             <Card.Title className="image_style">{title}</Card.Title>
@@ -128,7 +128,7 @@ function Books(props){
             <Col xs={8}>
 
                 <Row>
-                    {heroImage ? <img src={heroImage} className="image_style"/> : <div>loading...</div>} 
+                    {heroImage ? <img src={heroImage} className="image_style" alt="" /> : <div>loading...</div>} 
                 </Row>
 
                 <h1>Hello: {(props.currentUser === null) ? "Guest" : props.currentUser.firstName + ' ' + props.currentUser.lastName}</h1>
