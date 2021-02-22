@@ -33,7 +33,7 @@ function MyNavBar(props) {
     return(
 
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="/books">Book Store!</Navbar.Brand>
+        <Navbar.Brand>Book Store!</Navbar.Brand>
         <Col xs={5}>
           <Nav className="mr-auto">
             <LinkContainer to="/books">
