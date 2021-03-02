@@ -83,6 +83,15 @@ function Books(props){
         } else {
             filteredData = bookData;
         }
+        
+        function addToCart(_id, inventory, storeId){
+
+            return(
+                <React.Fragment>
+                    {(inventory < 1 ) ? <Button variant="danger">out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e )=> handleClick(e)}>Add to Cart</Button>}
+                </React.Fragment>
+            )
+        }
 
 
         return filteredData.map((data, index) => {
@@ -108,7 +117,7 @@ function Books(props){
                             <Card.Text>
                                 Price: ${price}
                             </Card.Text>
-                            {(inventory < 1 ) ? <Button variant="danger">out of stock</Button> : <Button variant="outline-info" id={_id} name={storeId} onClick={(e )=> handleClick(e)}>Add to Cart</Button>}
+                            {(props.currentUser === null) ? <Button variant="warning">Register/login to Buy</Button> : addToCart(_id, inventory, storeId) }
                         </Card.Body>
                     </Card>
                 </Col>
