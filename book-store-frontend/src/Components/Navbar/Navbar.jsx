@@ -15,12 +15,35 @@ function MyNavBar(props) {
 
   }
 
-  const loginAndRegisterLinks = () =>{
+
+
+  const displayRetailerMain = () => {
+    return(
+      <React.Fragment>
+      <LinkContainer to="/retailer/main">
+        <NavItem eventKey={7}>Retailer Main</NavItem>
+      </LinkContainer>
+    </React.Fragment>
+    )
+  }
+
+  const registerLinks = () =>{
 
     return(
       <React.Fragment>
         <LinkContainer to="/register">
           <NavItem eventKey={3}>Register</NavItem>
+        </LinkContainer>
+      </React.Fragment>
+    )
+  }
+
+  const myCart = () => {
+    
+    return(
+      <React.Fragment>
+        <LinkContainer to="/mycart">
+          <NavItem eventKey={6}>My Cart</NavItem>
         </LinkContainer>
       </React.Fragment>
     )
@@ -36,19 +59,23 @@ function MyNavBar(props) {
         <Navbar.Brand>Book Store!</Navbar.Brand>
         <Col xs={5}>
           <Nav className="mr-auto">
-            <LinkContainer to="/books">
-              <NavItem eventKey={1}>Books</NavItem>
-            </LinkContainer>
-            <Col/>
+            <Col>
+              <LinkContainer to="/books">
+                <NavItem eventKey={1}>Books</NavItem>
+              </LinkContainer>
+            </Col>
+            {/* <Col/>
             <LinkContainer to="/retailer/login">
               <NavItem eventKey={5}>Retailer login</NavItem>
             </LinkContainer>
+            <Col/> */}
+
+            <Col>
+             {(props.currentUser !== null && props.currentUser.type === 'customer') ? myCart() : null}
+              {(props.currentUser !== null && props.currentUser.type === 'retailer') ? displayRetailerMain() : null }
+              {(props.currentUser === null) ? registerLinks() : null }
+            </Col>
             <Col/>
-            <LinkContainer to="/mycart">
-              <NavItem eventKey={6}>My Cart</NavItem>
-            </LinkContainer>
-            <Col/>
-            {(props.currentUser === null) ? loginAndRegisterLinks() : null }
           </Nav>
         </Col>
 
